@@ -86,7 +86,7 @@ public class QuickSort {
         Student pivot = students.get(high);
         int i = low - 1;
         for (int j = low; j < high; j++) {
-            if (students.get(j).getAverageGrade() < pivot.getAverageGrade()) {
+            if (students.get(j).getAvgScore() < pivot.getAvgScore()) {
                 i++;
                 swapStudent(students, i, j);
             }
@@ -101,4 +101,4 @@ public class QuickSort {
         students.set(j, temp);
     }
 }
-    }
+
