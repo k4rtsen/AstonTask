@@ -1,3 +1,4 @@
+
 public class Student {
     private String group;
     private double avgScore;
@@ -42,4 +43,5 @@ public class Student {
                 '}';
     }
 }
+
 
