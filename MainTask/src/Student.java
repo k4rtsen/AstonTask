@@ -1,11 +1,35 @@
 public class Student {
-    private int group;
+    private String group;
     private double avgScore;
     private int gradeBookNumber;
 
-    Student(int group, double avgScore, int gradeBookNumber) {
+    Student(String group, double avgScore, int gradeBookNumber) {
         this.group = group;
         this.avgScore = avgScore;
+        this.gradeBookNumber = gradeBookNumber;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    public int getGradeBookNumber() {
+        return gradeBookNumber;
+    }
+
+    public void setGradeBookNumber(int gradeBookNumber) {
         this.gradeBookNumber = gradeBookNumber;
     }
 
