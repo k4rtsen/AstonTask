@@ -1,9 +1,9 @@
 public class User {
-    private String name;
-    private String password;
-    private String email;
+    private final String name;
+    private final String password;
+    private final String email;
 
-    User(String name, String password, String email) {
+    private User(String name, String password, String email) {
         this.name = name;
         this.password = password;
         this.email = email;
@@ -13,24 +13,12 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
@@ -41,49 +29,29 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
-}
 
-public class User {
-    private String name;
-    private String password;
-    private String email;
+    public static class UserBuilder {
+        private String name;
+        private String password;
+        private String email;
 
-    User(String name, String password, String email) {
-        this.name = name;
-        this.password = password;
-        this.email = email;
-    }
+        public UserBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public UserBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public UserBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        public User build() {
+            return new User(name, password, email);
+        }
     }
 }
