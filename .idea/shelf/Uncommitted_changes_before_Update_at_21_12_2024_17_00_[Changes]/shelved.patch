@@ -1,0 +1,16 @@
+Index: MainTask/src/QuickSort.java
+===================================================================
+diff --git a/MainTask/src/QuickSort.java b/MainTask/src/QuickSort.java
+deleted file mode 100644
+--- a/MainTask/src/QuickSort.java	(revision 4850fc026e5896e398d0085b34d7c179a2a43f85)
++++ /dev/null	(revision 4850fc026e5896e398d0085b34d7c179a2a43f85)
+@@ -1,8 +0,0 @@
+-import java.util.List;
+-
+-public class QuickSort {
+-
+-    // Быстрая сортировка для автобуса по пробегу
+-    public static void quickSortBus(List<Bus> buses) {
+-        quickSortBus(buses, 0, buses.size() - 1);
+-    }
+\ No newline at end of file

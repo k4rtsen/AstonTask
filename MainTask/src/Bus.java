@@ -54,4 +54,3 @@ public class Bus {
             return new Bus(number, model, mileage);
         }
     }
-}
