@@ -1,25 +1,33 @@
-import java.util.ArrayList;
+import models.Bus;
+import models.Student;
+import models.User;
+
 import java.util.Arrays;
 import java.util.List;
 
+import static algorithms.QuickSort.*;
+
 public class MainSort {
 public static void main(String[] args) {
+    Bus.BusBuilder busBuilder = new Bus.BusBuilder();
     List<Bus> buses = Arrays.asList(
-            new Bus("111","Model A", 10000),
-            new Bus("121","Model B", 5000),
-            new Bus("131","Model C", 15000)
+            busBuilder.setModel("Model A").setNumber("A100N").setMileage(10000).build(),
+            busBuilder.setModel("Model B").setNumber("B100N").setMileage(5000).build(),
+            busBuilder.setModel("Model C").setNumber("C100N").setMileage(15000).build()
     );
 
+    User.UserBuilder userBuilder = new User.UserBuilder();
     List<User> users = Arrays.asList(
-            new User("Ivan","123","mail"),
-            new User("Anna", "321", "gmail"),
-            new User("Petr","213", "rambler")
+            userBuilder.setEmail("ivan@mail.ru").setName("Ivan").setPassword("ivanpsswd12345").build(),
+            userBuilder.setEmail("anna@mail.ru").setName("Anna").setPassword("annapsswd12345").build(),
+            userBuilder.setEmail("petr@mail.ru").setName("Petr").setPassword("petrpsswd12345").build()
     );
 
+    Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
     List<Student> students = Arrays.asList(
-            new Student("Maria", 4.8, 1),
-            new Student("Sergey", 3.7, 2),
-            new Student("Elena", 4.2,3)
+            studentBuilder.setGroup("A12").setGradeBookNum(1234567890).setScore(4.8).build(),
+            studentBuilder.setGroup("B12").setGradeBookNum(1874812740).setScore(3.7).build(),
+            studentBuilder.setGroup("C12").setGradeBookNum(1209571039).setScore(4.2).build()
     );
 
     System.out.println("Автобусы до сортировки:");
@@ -41,12 +49,4 @@ public static void main(String[] args) {
     students.forEach(System.out::println);
 }
 
-    private static void quickSortBus(List<Bus> buses) {
-    }
-
-    private static void quickSortUser(List<User> users) {
-    }
-
-    private static void quickSortStudent(List<Student> students) {
-    }
 }
