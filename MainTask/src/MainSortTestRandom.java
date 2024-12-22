@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import models.Bus;
 import models.Student;
 import models.User;
@@ -92,9 +92,10 @@ public class MainSortTestRandom {
         }
         return students;
     }
-=======
+}
+/*=======
 package PACKAGE_NAME;
 
 public class MainSortTestRandom {
 >>>>>>> ca4405aef4ffbd22d4e87e5fd4ee6b421011e905
-}
+}*/
