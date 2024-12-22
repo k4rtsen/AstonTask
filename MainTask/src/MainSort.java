@@ -5,21 +5,21 @@ import java.util.List;
 public class MainSort {
 public static void main(String[] args) {
     List<Bus> buses = Arrays.asList(
-            new Bus("Model A", 10000),
-            new Bus("Model B", 5000),
-            new Bus("Model C", 15000)
+            new Bus("111","Model A", 10000),
+            new Bus("121","Model B", 5000),
+            new Bus("131","Model C", 15000)
     );
 
     List<User> users = Arrays.asList(
-            new User("Ivan"),
-            new User("Anna"),
-            new User("Petr")
+            new User("Ivan","123","mail"),
+            new User("Anna", "321", "gmail"),
+            new User("Petr","213", "rambler")
     );
 
     List<Student> students = Arrays.asList(
-            new Student("Maria", 4.8),
-            new Student("Sergey", 3.7),
-            new Student("Elena", 4.2)
+            new Student("Maria", 4.8, 1),
+            new Student("Sergey", 3.7, 2),
+            new Student("Elena", 4.2,3)
     );
 
     System.out.println("Автобусы до сортировки:");
@@ -40,4 +40,13 @@ public static void main(String[] args) {
     System.out.println("\nСтуденты после сортировки:");
     students.forEach(System.out::println);
 }
+
+    private static void quickSortBus(List<Bus> buses) {
+    }
+
+    private static void quickSortUser(List<User> users) {
+    }
+
+    private static void quickSortStudent(List<Student> students) {
+    }
 }
