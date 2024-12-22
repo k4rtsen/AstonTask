@@ -3,7 +3,7 @@ package models;
 public class Bus {
     private final String number;
     private final String model;
-    private final int mileage;
+    private final Integer mileage;
 
     private Bus(String number, String model, int mileage) {
         this.number = number;
@@ -19,7 +19,7 @@ public class Bus {
         return model;
     }
 
-    public int getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
