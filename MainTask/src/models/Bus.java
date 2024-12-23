@@ -1,17 +1,17 @@
 package models;
 
 public class Bus {
-    private final String number;
+    private final Integer number;
     private final String model;
     private final Integer mileage;
 
-    private Bus(String number, String model, Integer mileage) {
+    private Bus(Integer number, String model, Integer mileage) {
         this.number = number;
         this.model = model;
         this.mileage = mileage;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
@@ -33,11 +33,11 @@ public class Bus {
     }
 
     public static class BusBuilder {
-        private String number;
+        private Integer number;
         private String model;
-        private int mileage;
+        private Integer mileage;
 
-        public BusBuilder setNumber(String number) {
+        public BusBuilder setNumber(Integer number) {
             this.number = number;
             return this;
         }
