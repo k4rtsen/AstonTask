@@ -2,10 +2,10 @@ package models;
 
 public class Student {
     private final String group;
-    private final double avgScore;
-    private final int gradeBookNumber;
+    private final Double avgScore;
+    private final Integer gradeBookNumber;
 
-    private Student(String group, double avgScore, int gradeBookNumber) {
+    private Student(String group, Double avgScore, Integer gradeBookNumber) {
         this.group = group;
         this.avgScore = avgScore;
         this.gradeBookNumber = gradeBookNumber;
@@ -15,11 +15,11 @@ public class Student {
         return group;
     }
 
-    public double getAvgScore() {
+    public Double getAvgScore() {
         return avgScore;
     }
 
-    public int getGradeBookNumber() {
+    public Integer getGradeBookNumber() {
         return gradeBookNumber;
     }
 
@@ -42,12 +42,12 @@ public class Student {
             return this;
         }
 
-        public StudentBuilder setScore(double avgScore) {
+        public StudentBuilder setScore(Double avgScore) {
             this.avgScore = avgScore;
             return this;
         }
 
-        public StudentBuilder setGradeBookNum(int gradeBookNumber) {
+        public StudentBuilder setGradeBookNum(Integer gradeBookNumber) {
             this.gradeBookNumber = gradeBookNumber;
             return this;
         }
