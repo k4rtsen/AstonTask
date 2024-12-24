@@ -1,8 +1,17 @@
-package ruslan;
+package utilities;
 
-import java.util.Arrays;
+import enums.BusModelEnum;
+import enums.DomainUserEnum;
+import enums.MailUserEnum;
+import enums.UserNameEnum;
 
+/**
+ * Утилитарный класс с разными функциями
+ */
 public final class ClownUtilities {
+    static final int USER_EMAIL_LENGTH = 12;
+    static final int USER_PASSWORD_LENGTH = 8;
+
     private ClownUtilities() {
     }
 
@@ -18,23 +27,24 @@ public final class ClownUtilities {
 
     /**
      * Генератор номера автобуса для класса Bus в формате ББЧЧЧБ, где Б - латинская заглавная буква, Ч - число в dec
-     * @return
+     * @return строка - номер автобуса
      */
+    @Deprecated
     public static String getRandomBusNumber() {
-        return (char) getRandomNumber(65,90)+
+        return (char) getRandomNumber('A', 'Z')+
                 ""+
-                getRandomNumber(100,999)+
-                (char) getRandomNumber(65,90)+
-                (char) getRandomNumber(65,90);
+                getRandomNumber(100, 999)+
+                (char) getRandomNumber('A', 'Z')+
+                (char) getRandomNumber('A', 'Z');
     }
 
     /**
      * Генератор случайного выбора значения из перечислений
-     * @param className имя класса-перечисления
+     * @param modelName имя класса-перечисления
      * @return случайное значение из enum
      */
-    public static String getRandomFromEnum(String className) {
-        return switch (className) {
+    public static String getRandomFromEnum(String modelName) {
+        return switch (modelName) {
             case "Bus" -> BusModelEnum.values()[getRandomNumber(0, BusModelEnum.values().length)].toString();
             case "User" -> UserNameEnum.values()[getRandomNumber(0, UserNameEnum.values().length)].toString();
             default -> "";
@@ -44,40 +54,38 @@ public final class ClownUtilities {
     /**
      * Генерирует пароль для класса User, отвечающий сложности т.е. обязательное наличие прописной, заглавной латинских
      * букв, цифры, специального символа
-     * @param len длина пароля
      * @return сгенерированный пароль
      */
-    public static String getRandomUserSecret(int len) {
+    public static String getRandomUserPassword() {
         String symbolsCh = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         String symbolsNum = "1234567890";
         String symbolsSpec = "!@$%^&*";
-        StringBuilder secret;
+        StringBuilder password;
 
         do {
-            secret = new StringBuilder();
-            for (int i = 0; i < len; i++) {
-                secret.append((symbolsCh+symbolsNum+symbolsSpec)
+            password = new StringBuilder();
+            for (int i = 0; i < USER_PASSWORD_LENGTH; i++) {
+                password.append((symbolsCh+symbolsNum+symbolsSpec)
                         .charAt(getRandomNumber(1, (symbolsCh+symbolsNum+symbolsSpec).length())));
             }
 
-        } while (!secret.toString().matches(".*\\d.*")
-                | !secret.toString().matches(".*[" + symbolsSpec +"].*")
-                | !secret.toString().matches(".*[A-Z].*")
-                | !secret.toString().matches(".*[a-z].*"));
+        } while (!password.toString().matches(".*\\d.*")
+                | !password.toString().matches(".*[" + symbolsSpec +"].*")
+                | !password.toString().matches(".*[A-Z].*")
+                | !password.toString().matches(".*[a-z].*"));
 
-        return secret.toString();
+        return password.toString();
     }
 
     /**
      * Генерирует почту для класса User, с символом @, имени домена почты и домена верхнего уровня
-     * @param len длина имени почты
      * @return сгенерированную почту
      */
-    public static String getRandomUserMail(int len) {
+    public static String getRandomUserMail() {
         StringBuilder mail = new StringBuilder();
 
-        for (int i = 0; i < len; i++) {
-            mail.append((char) getRandomNumber(97, 122));
+        for (int i = 0; i < USER_EMAIL_LENGTH; i++) {
+            mail.append((char) getRandomNumber('a', 'z'));
         }
 
         return mail
@@ -92,13 +100,17 @@ public final class ClownUtilities {
      * @return строку - номер группы в формате Б-ЧЧЧ, где Б - заглавная латинская буква, Ч - положительное число
      */
     public static String getRandomStudentGroup() {
-        return (char) getRandomNumber(65,70)+
-                "-"+
-                getRandomNumber(100,999);
+        return (char) getRandomNumber('A', 'Z') + "-" + getRandomNumber(100, 999);
     }
 
+    /**
+     * Генератор случайных чисел для среднего балла Student
+     * @param min нижняя граница
+     * @param max верхняя граница
+     * @return double с точностью до 2х знаков после занятой
+     */
     public static double getRandomAverageScore(double min, double max) {
-        return Double.parseDouble(String.valueOf(((Math.random() * (max - min)) + min)).substring(0,3));
+        return (double) Math.round(((Math.random() * (max - min)) + min) * 100) / 100;
     }
 
 }
