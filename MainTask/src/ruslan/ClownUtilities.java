@@ -17,7 +17,7 @@ public final class ClownUtilities {
     }
 
     /**
-     * Генератор номера автобуса в формате ББЧЧЧБ, где Б - латинская заглавная буква, Ч - число в dec
+     * Генератор номера автобуса для класса Bus в формате ББЧЧЧБ, где Б - латинская заглавная буква, Ч - число в dec
      * @return
      */
     public static String getRandomBusNumber() {
@@ -28,13 +28,6 @@ public final class ClownUtilities {
                 (char) getRandomNumber(65,90);
     }
 
-//    public static <E extends Enum<E>> void getRandomFromEnum(E e) {
-//        for(Enum<E> item : e.getClass().getEnumConstants()){
-//            System.out.println(Arrays.toString(item.getClass().getEnumConstants()));
-//        }
-//        return String.valueOf(e.getClass().getEnumConstants().length);
-//    }
-
     /**
      * Генератор случайного выбора значения из перечислений
      * @param className имя класса-перечисления
@@ -42,15 +35,15 @@ public final class ClownUtilities {
      */
     public static String getRandomFromEnum(String className) {
         return switch (className) {
-            case "BusModelEnum" -> BusModelEnum.values()[getRandomNumber(0, BusModelEnum.values().length)].toString();
-            case "UserNameEnum" -> UserNameEnum.values()[getRandomNumber(0, UserNameEnum.values().length)].toString();
+            case "Bus" -> BusModelEnum.values()[getRandomNumber(0, BusModelEnum.values().length)].toString();
+            case "User" -> UserNameEnum.values()[getRandomNumber(0, UserNameEnum.values().length)].toString();
             default -> "";
         };
     }
 
     /**
-     * Генерирует пароль, отвечающий сложности т.е. обязательное наличие прописной, заглавной латинских букв, цифры,
-     * специального символа
+     * Генерирует пароль для класса User, отвечающий сложности т.е. обязательное наличие прописной, заглавной латинских
+     * букв, цифры, специального символа
      * @param len длина пароля
      * @return сгенерированный пароль
      */
@@ -76,7 +69,7 @@ public final class ClownUtilities {
     }
 
     /**
-     * Генерирует почту пользователя
+     * Генерирует почту для класса User, с символом @, имени домена почты и домена верхнего уровня
      * @param len длина имени почты
      * @return сгенерированную почту
      */
@@ -94,6 +87,10 @@ public final class ClownUtilities {
                 .toString();
     }
 
+    /**
+     * Метод для генерации номера группы для класса Student
+     * @return строку - номер группы в формате Б-ЧЧЧ, где Б - заглавная латинская буква, Ч - положительное число
+     */
     public static String getRandomStudentGroup() {
         return (char) getRandomNumber(65,70)+
                 "-"+
@@ -101,7 +98,7 @@ public final class ClownUtilities {
     }
 
     public static double getRandomAverageScore(double min, double max) {
-        return (double) ((Math.random() * (max - min)) + min);
+        return Double.parseDouble(String.valueOf(((Math.random() * (max - min)) + min)).substring(0,3));
     }
 
 }
