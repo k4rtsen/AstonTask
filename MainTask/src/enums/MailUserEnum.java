@@ -1,4 +1,4 @@
-package ruslan;
+package enums;
 
 public enum MailUserEnum {
     mail,
