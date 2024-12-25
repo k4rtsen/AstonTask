@@ -1,12 +1,23 @@
 package models;
 
-public class User {
+import comparators.UserComparator;
+
+import java.util.Comparator;
+
+public class User implements Filterable<User>{
     private final Integer id;
     private final String name;
     private final String password;
     private final String email;
+    // Чтобы не передавать в методы явным образом компараторы, мы один раз прописываем по какому полю будет любое сравнение элементов данного класса и если захотим в дальнейшем поменять его, то можно поменять лишь данный параметр
+    private static Comparator<User> comp;
+
+    static {
+        comp = UserComparator.FullComparison.getFullComparison();
+    }
 
     private User(Integer id, String name, String password, String email) {
+        super();
         this.id = id;
         this.name = name;
         this.password = password;
@@ -31,10 +42,23 @@ public class User {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
+                ", \tname='" + name + '\'' +
+                ", \tpassword='" + password + '\'' +
+                ", \temail='" + email + '\'' +
                 '}';
+    }
+
+    public static Comparator<User> getComp() {
+        return comp;
+    }
+
+    public static void setComp(Comparator<User> comp) {
+        User.comp = comp;
+    }
+
+    @Override
+    public int compTo(User obj) {
+        return comp.compare(this, obj);
     }
 
     public static class UserBuilder {

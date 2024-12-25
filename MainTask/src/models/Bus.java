@@ -1,11 +1,23 @@
 package models;
 
-public class Bus {
+import comparators.BusComparator;
+
+import javax.sql.rowset.FilteredRowSet;
+import java.util.Comparator;
+
+public class Bus implements Filterable<Bus> {
     private final Integer number;
     private final String model;
     private final Integer mileage;
+    // Чтобы не передавать в методы явным образом компараторы, мы один раз прописываем по какому полю будет любое сравнение элементов данного класса и если захотим в дальнейшем поменять его, то можно поменять лишь данный параметр
+    private static Comparator<Bus> comp;
+
+    static {
+        comp = BusComparator.FullComparison.getFullComparison();
+    }
 
     private Bus(Integer number, String model, Integer mileage) {
+        super();
         this.number = number;
         this.model = model;
         this.mileage = mileage;
@@ -26,10 +38,23 @@ public class Bus {
     @Override
     public String toString() {
         return "Bus{" +
-                "number='" + number + '\'' +
-                ", model='" + model + '\'' +
-                ", mileage=" + mileage +
+                " number='" + number + '\'' +
+                ", \tmodel='" + model + '\'' +
+                ", \tmileage=" + mileage +
                 '}';
+    }
+
+    public static Comparator<Bus> getComp() {
+        return comp;
+    }
+
+    public static void setComp(Comparator<Bus> comp) {
+        Bus.comp = comp;
+    }
+
+    @Override
+    public int compTo(Bus obj) {
+        return comp.compare(this, obj);
     }
 
     public static class BusBuilder {

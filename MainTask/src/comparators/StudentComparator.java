@@ -1,11 +1,20 @@
 package comparators;
 
+import models.Bus;
 import models.Student;
 
 import java.util.Comparator;
 
 public class StudentComparator {
 
+    // только для сортировки
+    public static class FullComparison {
+        public static Comparator<Student> getFullComparison() {
+            return new ByGradeBook().thenComparing(new ByGroup().thenComparing(new ByScore()));
+        }
+    }
+
+    // для сортировок и бин поиска
     public static class ByGroup implements Comparator<Student> {
 
         @Override
@@ -14,6 +23,7 @@ public class StudentComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByScore implements Comparator<Student> {
 
         @Override
@@ -22,6 +32,7 @@ public class StudentComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByGradeBook implements Comparator<Student> {
 
         @Override
