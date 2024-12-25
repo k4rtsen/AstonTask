@@ -1,11 +1,20 @@
 package comparators;
 
+import models.Student;
 import models.User;
 
 import java.util.Comparator;
 
 public class UserComparator {
 
+    // только для сортировки
+    public static class FullComparison {
+        public static Comparator<User> getFullComparison() {
+            return new ById().thenComparing(new ByName().thenComparing(new ByEmail()));
+        }
+    }
+
+    // для сортировок и бин поиска
     public static class ById implements Comparator<User> {
 
         @Override
@@ -14,6 +23,7 @@ public class UserComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByName implements Comparator<User> {
 
         @Override
@@ -22,6 +32,7 @@ public class UserComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByPassword implements Comparator<User> {
 
         @Override
@@ -30,6 +41,7 @@ public class UserComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByEmail implements Comparator<User> {
 
         @Override

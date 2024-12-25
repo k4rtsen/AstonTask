@@ -50,7 +50,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.<Bus>sort(buses, new BusComparator.ByMileage());
+                    QuickSort.sort(buses);
                     infoToFile = new StringBuilder();
                     for (Bus it : buses) {
                         infoToFile.append(it.toString());
@@ -97,7 +97,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.<User>sort(users, new UserComparator.ByEmail());
+                    QuickSort.sort(users);
                     infoToFile = new StringBuilder();
                     for (User it : users) {
                         infoToFile.append(it.toString());
@@ -143,7 +143,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.<Student>sort(students, new StudentComparator.ByScore());
+                    QuickSort.sort(students);
                     infoToFile = new StringBuilder();
                     for (Student it : students) {
                         infoToFile.append(it.toString());

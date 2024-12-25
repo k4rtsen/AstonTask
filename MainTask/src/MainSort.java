@@ -1,5 +1,5 @@
 import algorithms.*;
-import comparators.*;
+import comparators.BusComparator;
 import models.*;
 import java.util.*;
 
@@ -7,16 +7,17 @@ public class MainSort {
     public static void main(String[] args) {
         Bus.BusBuilder busBuilder = new Bus.BusBuilder();
         Random rnd = new Random();
+        final int RANGE = 10;//Integer.MAX_VALUE;
         List<Bus> buses = Arrays.asList(
-                busBuilder.setModel("Model A").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model B").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model C").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model A").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model B").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model C").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model A").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model B").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build(),
-                busBuilder.setModel("Model C").setNumber(rnd.nextInt(Integer.MAX_VALUE)).setMileage(rnd.nextInt(Integer.MAX_VALUE)).build()
+                busBuilder.setModel("Model A").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model B").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model C").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model A").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model B").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model C").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model A").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model B").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build(),
+                busBuilder.setModel("Model C").setNumber(rnd.nextInt(RANGE)).setMileage(rnd.nextInt(RANGE)).build()
         );
 
         User.UserBuilder userBuilder = new User.UserBuilder();
@@ -35,14 +36,14 @@ public class MainSort {
 
         System.out.println("Автобусы до сортировки:");
         buses.forEach(System.out::println);
-        QuickSort.<Bus>sort(buses, new BusComparator.ByMileage());
+        QuickSort.sort(buses);
         System.out.println("\nАвтобусы после сортировки:");
         buses.forEach(System.out::println);
 
         System.out.println("Бин поиск автобуса Model C по модели");
-        Bus c = busBuilder.setModel("Model C").setNumber(3).setMileage(1).build();
-        BinarySearch<Bus> busSearch = new BinarySearch<>();
-        int index = busSearch.search(buses, c, new BusComparator.ByModel());
+        Bus lookingBus = busBuilder.setModel("Model C").setNumber(3).setMileage(1).build();
+        Bus.setComp(new BusComparator.ByNumber());
+        int index = BinarySearch.search(buses, lookingBus);
         String busResult = index == -1 ? "Такого автобуса нет в массиве" : "Автобус найден: " + buses.get(index);
         System.out.println(busResult);
 //
