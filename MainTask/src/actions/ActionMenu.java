@@ -1,18 +1,14 @@
 package actions;
 
-import algorithms.QuickSort;
-import com.sun.source.tree.UsesTree;
-import comparators.BusComparator;
-import comparators.StudentComparator;
-import comparators.UserComparator;
-import models.Bus;
-import models.Student;
-import models.User;
+import algorithms.*;
+import models.*;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import static actions.ActionQuickSort.*;
+import static actions.ActionBinarySearch.*;
 import static utilities.FileUtilities.*;
 
 public class ActionMenu {
@@ -24,11 +20,13 @@ public class ActionMenu {
                 
                 1) Вывести массив в консоль\
                 
-                2) Отсортировать массив быстрой сортировкой\
+                2) Отсортировать массив быстрой сортировкой (поле по умолчанию)\
                 
-                3) Отсортировать массив по определенному полю\
+                3) Отсортировать массив быстрой сортировкой по определенному полю\
                 
-                4) Найти элемент (бинарный поиск)\
+                4) Отсортировать массив альтернативной быстрой сортировкой по определенному полю\
+                
+                5) Найти элемент (бинарный поиск)\
                 
                 0) Вернуться в предыдущее меню""";
 
@@ -53,18 +51,22 @@ public class ActionMenu {
                     QuickSort.sort(buses);
                     infoToFile = new StringBuilder();
                     for (Bus it : buses) {
-                        infoToFile.append(it.toString());
+                        infoToFile.append(it).append("\n");
                     }
                     fileWriting(infoToFile.toString());
-                    System.out.println("\nМассив отсортирован.");
+                    System.out.println("\nМассив отсортирован по умолчанию (по пробегу).");
                     break;
 
                 case "3":
-                    System.out.print("\nОтсортировать массив по определенному полю.\n");
+                    QuickSortBus(buses, "base");
                     break;
 
                 case "4":
-                    System.out.print("\nНайти элемент (бинарный поиск).\n");
+                    QuickSortBus(buses, "additional");
+                    break;
+
+                case "5":
+                    System.out.println(BinarySearchBus(buses));
                     break;
 
                 case "0":
@@ -100,18 +102,22 @@ public class ActionMenu {
                     QuickSort.sort(users);
                     infoToFile = new StringBuilder();
                     for (User it : users) {
-                        infoToFile.append(it.toString());
+                        infoToFile.append(it).append("\n");
                     }
                     fileWriting(infoToFile.toString());
                     System.out.println("\nМассив отсортирован.");
                     break;
 
                 case "3":
-                    System.out.print("\nОтсортировать массив по определенному полю.\n");
+                    QuickSortUser(users, "base");
                     break;
 
                 case "4":
-                    System.out.print("\nНайти элемент (бинарный поиск).\n");
+                    QuickSortUser(users, "additional");
+                    break;
+
+                case "5":
+                    System.out.println(BinarySearchUser(users));
                     break;
 
                 case "0":
@@ -146,18 +152,22 @@ public class ActionMenu {
                     QuickSort.sort(students);
                     infoToFile = new StringBuilder();
                     for (Student it : students) {
-                        infoToFile.append(it.toString());
+                        infoToFile.append(it).append("\n");
                     }
                     fileWriting(infoToFile.toString());
                     System.out.println("\nМассив отсортирован.");
                     break;
 
                 case "3":
-                    System.out.print("\nОтсортировать массив по определенному полю.\n");
+                    QuickSortStudent(students, "base");
                     break;
 
                 case "4":
-                    System.out.print("\nНайти элемент (бинарный поиск).\n");
+                    QuickSortStudent(students, "additional");
+                    break;
+
+                case "5":
+                    System.out.println(BinarySearchStudent(students));
                     break;
 
                 case "0":

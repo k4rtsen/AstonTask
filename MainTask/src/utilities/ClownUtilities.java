@@ -11,6 +11,9 @@ import enums.UserNameEnum;
 public final class ClownUtilities {
     static final int USER_EMAIL_LENGTH = 12;
     static final int USER_PASSWORD_LENGTH = 8;
+    static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static final String NUMBERS_FOR_PASSWORD = "1234567890";
+    static final String SPECIAL_FOR_PASSWORD = "!@$%^&*";
 
     private ClownUtilities() {
     }
@@ -40,13 +43,15 @@ public final class ClownUtilities {
 
     /**
      * Генератор случайного выбора значения из перечислений
-     * @param modelName имя класса-перечисления
+     * @param enumName имя класса-перечисления
      * @return случайное значение из enum
      */
-    public static String getRandomFromEnum(String modelName) {
-        return switch (modelName) {
+    public static String getRandomFromEnum(String enumName) {
+        return switch (enumName) {
             case "Bus" -> BusModelEnum.values()[getRandomNumber(0, BusModelEnum.values().length)].toString();
             case "User" -> UserNameEnum.values()[getRandomNumber(0, UserNameEnum.values().length)].toString();
+            case "Mail" -> MailUserEnum.values()[getRandomNumber(0, MailUserEnum.values().length)].toString();
+            case "Domain" -> DomainUserEnum.values()[getRandomNumber(0, UserNameEnum.values().length)].toString();
             default -> "";
         };
     }
@@ -57,20 +62,17 @@ public final class ClownUtilities {
      * @return сгенерированный пароль
      */
     public static String getRandomUserPassword() {
-        String symbolsCh = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        String symbolsNum = "1234567890";
-        String symbolsSpec = "!@$%^&*";
         StringBuilder password;
 
         do {
             password = new StringBuilder();
             for (int i = 0; i < USER_PASSWORD_LENGTH; i++) {
-                password.append((symbolsCh+symbolsNum+symbolsSpec)
-                        .charAt(getRandomNumber(1, (symbolsCh+symbolsNum+symbolsSpec).length())));
+                password.append((LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD)
+                        .charAt(getRandomNumber(1, (LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD).length())));
             }
 
         } while (!password.toString().matches(".*\\d.*")
-                | !password.toString().matches(".*[" + symbolsSpec +"].*")
+                | !password.toString().matches(".*[" + SPECIAL_FOR_PASSWORD +"].*")
                 | !password.toString().matches(".*[A-Z].*")
                 | !password.toString().matches(".*[a-z].*"));
 
@@ -90,8 +92,9 @@ public final class ClownUtilities {
 
         return mail
                 .append("@")
-                .append(MailUserEnum.values()[getRandomNumber(0, MailUserEnum.values().length)])
-                .append(".").append(DomainUserEnum.values()[getRandomNumber(0, DomainUserEnum.values().length)])
+                .append(getRandomFromEnum("Mail"))
+                .append(".")
+                .append(getRandomFromEnum("Domain"))
                 .toString();
     }
 
