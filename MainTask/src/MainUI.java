@@ -1,17 +1,12 @@
 import java.io.*;
 import java.util.*;
 
-import algorithms.QuickSort;
-import comparators.BusComparator;
-import comparators.StudentComparator;
-import comparators.UserComparator;
 import models.*;
 
 import static actions.ActionMenu.*;
 import static filling.ByFromFile.*;
 import static filling.ByRandom.*;
 import static filling.ByManual.*;
-import static utilities.FileUtilities.*;
 
 public class MainUI {
     public static void main(String[] args) throws IOException {
@@ -31,7 +26,7 @@ public class MainUI {
                 0) Выход из приложения""";
 
         Scanner scanner = new Scanner(System.in);
-        String inputMenu = "";
+        String inputMenu;
 
         System.out.println(helloText);
         do {
@@ -41,20 +36,24 @@ public class MainUI {
 
             switch (inputMenu) {
                 case "1":
-                    System.out.println("\nВы выбрали класс Bus (Number, Model, Mileage)\n");
+                    System.out.println("\nВы выбрали класс Bus (Number, Model, Mileage)");
                     modelsMenu("Bus");
                     break;
+
                 case "2":
-                    System.out.println("\nВы выбрали класс User (Name, Secret, Mail)\n");
+                    System.out.println("\nВы выбрали класс User (Name, Password, Mail)");
                     modelsMenu("User");
                     break;
+
                 case "3":
-                    System.out.println("\nВы выбрали класс Student (Group Number, Average Score, Grade Book Number)\n");
+                    System.out.println("\nВы выбрали класс Student (Group Number, Average Score, Grade Book Number)");
                     modelsMenu("Student");
                     break;
+
                 case "0":
                     System.out.println("\nВыход из программы.");
                     break;
+
                 default:
                     System.out.print("\nКоманда не распознана, повторите ввод (0 - для выхода).\n");
             }
