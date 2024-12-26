@@ -1,6 +1,9 @@
 package actions;
 
 import algorithms.*;
+import comparators.BusComparator;
+import comparators.StudentComparator;
+import comparators.UserComparator;
 import models.*;
 
 import java.io.IOException;
@@ -8,28 +11,21 @@ import java.util.List;
 import java.util.Scanner;
 
 import static actions.ActionQuickSort.*;
+import static actions.ActionQuickSortDefault.*;
 import static actions.ActionBinarySearch.*;
 import static utilities.FileUtilities.*;
 
 public class ActionMenu {
     static final String actionMenu = """
                 
-                Массив %s (содержит %d записей)\
-                
-                Выберите действие:\
-                
-                1) Вывести массив в консоль\
-                
-                2) Отсортировать массив быстрой сортировкой (поле по умолчанию)\
-                
-                3) Отсортировать массив быстрой сортировкой по определенному полю\
-                
-                4) Отсортировать массив альтернативной быстрой сортировкой по определенному полю\
-                
-                5) Найти элемент (бинарный поиск)\
-                
+                Массив %s (содержит %d записей)
+                Выберите действие:
+                1) Вывести массив в консоль
+                2) Отсортировать массив быстрой сортировкой (поле по умолчанию)
+                3) Отсортировать массив быстрой сортировкой по определенному полю
+                4) Отсортировать массив альтернативной быстрой сортировкой по определенному полю
+                5) Найти элемент (бинарный поиск)
                 0) Вернуться в предыдущее меню""";
-
 
     public static void actionMenuBus(List<Bus> buses) throws IOException {
         Scanner actionScan = new Scanner(System.in);
@@ -48,13 +44,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.sort(buses);
-                    infoToFile = new StringBuilder();
-                    for (Bus it : buses) {
-                        infoToFile.append(it).append("\n");
-                    }
-                    fileWriting(infoToFile.toString());
-                    System.out.println("\nМассив отсортирован по умолчанию (по пробегу).");
+                    QuickSortBusDefault(buses);
                     break;
 
                 case "3":
@@ -99,13 +89,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.sort(users);
-                    infoToFile = new StringBuilder();
-                    for (User it : users) {
-                        infoToFile.append(it).append("\n");
-                    }
-                    fileWriting(infoToFile.toString());
-                    System.out.println("\nМассив отсортирован.");
+                    QuickSortUserDefault(users);
                     break;
 
                 case "3":
@@ -149,13 +133,7 @@ public class ActionMenu {
                     break;
 
                 case "2":
-                    QuickSort.sort(students);
-                    infoToFile = new StringBuilder();
-                    for (Student it : students) {
-                        infoToFile.append(it).append("\n");
-                    }
-                    fileWriting(infoToFile.toString());
-                    System.out.println("\nМассив отсортирован.");
+                    QuickSortStudentDefault(students);
                     break;
 
                 case "3":

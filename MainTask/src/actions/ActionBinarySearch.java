@@ -16,14 +16,10 @@ public class ActionBinarySearch {
         Scanner actionScan = new Scanner(System.in);
         String searchField = """
                 
-                Выберите поле для поиска:\
-                
-                1) По номеру (by number)\
-                
-                2) По модели (by model)\
-                
-                3) По пробегу (by mileage)\
-                
+                Выберите поле для поиска:
+                1) По номеру (by number)
+                2) По модели (by model)
+                3) По пробегу (by mileage)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         String busResult = "";
@@ -114,16 +110,11 @@ public class ActionBinarySearch {
         Scanner actionScan = new Scanner(System.in);
         String searchField = """
                 
-                Выберите поля для поиска:\
-                
-                1) По id (by id)\
-                
-                2) По имени (by name)\
-                
-                3) По паролю (by password)\
-                
-                4) По электронной почте (by email)\
-                
+                Выберите поля для поиска:
+                1) По id (by id)
+                2) По имени (by name)
+                3) По паролю (by password)
+                4) По электронной почте (by email)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         String userResult = "";
@@ -226,14 +217,10 @@ public class ActionBinarySearch {
         Scanner actionScan = new Scanner(System.in);
         String searchField = """
                 
-                Выберите поле для поиска:\
-                
-                1) По группе (by group)\
-                
-                2) По среднему баллу (by average score)\
-                
-                3) По зачетной книжке (by grade book)\
-                
+                Выберите поле для поиска:
+                1) По группе (by group)
+                2) По среднему баллу (by average score)
+                3) По зачетной книжке (by grade book)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         String studentResult = "";

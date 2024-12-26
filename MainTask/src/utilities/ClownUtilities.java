@@ -13,7 +13,12 @@ public final class ClownUtilities {
     static final int USER_PASSWORD_LENGTH = 8;
     static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static final String NUMBERS_FOR_PASSWORD = "1234567890";
-    static final String SPECIAL_FOR_PASSWORD = "!@$%^&*";
+    static final String SPECIAL_FOR_PASSWORD = "!@$^&*";
+    static final String REGEX_FOR_PASSWORD_CHECK = "^(?=.*[A-Z])(?=.*["
+            + SPECIAL_FOR_PASSWORD
+            + "])(?=.*[0-9])(?=.*[a-z]).{"
+            + USER_PASSWORD_LENGTH
+            +"}$";
 
     private ClownUtilities() {
     }
@@ -63,19 +68,13 @@ public final class ClownUtilities {
      */
     public static String getRandomUserPassword() {
         StringBuilder password;
-
         do {
             password = new StringBuilder();
             for (int i = 0; i < USER_PASSWORD_LENGTH; i++) {
                 password.append((LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD)
                         .charAt(getRandomNumber(1, (LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD).length())));
             }
-
-        } while (!password.toString().matches(".*\\d.*")
-                | !password.toString().matches(".*[" + SPECIAL_FOR_PASSWORD +"].*")
-                | !password.toString().matches(".*[A-Z].*")
-                | !password.toString().matches(".*[a-z].*"));
-
+        } while (!password.toString().matches(REGEX_FOR_PASSWORD_CHECK));
         return password.toString();
     }
 

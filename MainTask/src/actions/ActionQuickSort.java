@@ -10,20 +10,24 @@ import java.util.Scanner;
 
 import static utilities.FileUtilities.fileWriting;
 
+/**
+ * Класс для сортировок по разным полям
+ */
 public class ActionQuickSort {
-
+    /**
+     * Сортировка массива автобусов по выбираемому полю
+     * @param buses массив автобусов
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortBus(List<Bus> buses, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
                 
-                Выберите поля для сортировки:\
-                
-                1) По номеру (by number)\
-                
-                2) По модели (by model)\
-                
-                3) По пробегу (by mileage)\
-                
+                Выберите поля для сортировки:
+                1) По номеру (by number)
+                2) По модели (by model)
+                3) По пробегу (by mileage)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;
@@ -93,21 +97,21 @@ public class ActionQuickSort {
         }
     }
 
-
+    /**
+     * Сортировка массива пользователей по выбираемому полю
+     * @param users массив пользователей
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortUser(List<User> users, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
                 
-                Выберите поля для сортировки:\
-                
-                1) По id (by id)\
-                
-                2) По имени (by name)\
-                
-                3) По паролю (by password)\
-                
-                4) По электронной почте (by email)\
-                
+                Выберите поля для сортировки:
+                1) По id (by id)
+                2) По имени (by name)
+                3) По паролю (by password)
+                4) По электронной почте (by email)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;
@@ -190,19 +194,20 @@ public class ActionQuickSort {
         }
     }
 
-
+    /**
+     * Сортировка массива студентов по выбираемому полю
+     * @param students массив студентов
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortStudent(List<Student> students, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField ="""
                 
-                Выберите поле для сортировки:\
-                
-                1) По группе (by group)\
-                
-                2) По среднему баллу (by average score)\
-                
-                3) По зачетной книжке (by grade book)\
-                
+                Выберите поле для сортировки:
+                1) По группе (by group)
+                2) По среднему баллу (by average score)
+                3) По зачетной книжке (by grade book)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;
