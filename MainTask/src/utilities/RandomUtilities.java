@@ -8,7 +8,7 @@ import enums.UserNameEnum;
 /**
  * Утилитарный класс с разными функциями
  */
-public final class ClownUtilities {
+public final class RandomUtilities {
     static final int USER_EMAIL_LENGTH = 12;
     static final int USER_PASSWORD_LENGTH = 8;
     static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -19,9 +19,6 @@ public final class ClownUtilities {
             + "])(?=.*[0-9])(?=.*[a-z]).{"
             + USER_PASSWORD_LENGTH
             +"}$";
-
-    private ClownUtilities() {
-    }
 
     /**
      * Генератор случайных чисел в заданном диапазоне
