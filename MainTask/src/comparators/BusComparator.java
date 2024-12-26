@@ -6,6 +6,14 @@ import java.util.Comparator;
 
 public class BusComparator {
 
+    // только для сортировки
+    public static class FullComparison {
+        public static Comparator<Bus> getFullComparison() {
+            return new ByNumber().thenComparing(new ByModel().thenComparing(new ByMileage()));
+        }
+    }
+
+    // для сортировок и бин поиска
     public static class ByNumber implements Comparator<Bus> {
 
         @Override
@@ -14,6 +22,7 @@ public class BusComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByModel implements Comparator<Bus> {
 
         @Override
@@ -22,6 +31,7 @@ public class BusComparator {
         }
     }
 
+    // для сортировок и бин поиска
     public static class ByMileage implements Comparator<Bus> {
 
         @Override

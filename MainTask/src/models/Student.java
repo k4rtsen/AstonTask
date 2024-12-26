@@ -1,11 +1,24 @@
 package models;
 
-public class Student {
+import comparators.StudentComparator;
+
+import javax.sql.rowset.FilteredRowSet;
+import java.util.Comparator;
+import java.util.logging.Filter;
+
+public class Student implements Filterable<Student>{
     private final String group;
     private final Double avgScore;
     private final Integer gradeBookNumber;
+    // Чтобы не передавать в методы явным образом компараторы, мы один раз прописываем по какому полю будет любое сравнение элементов данного класса и если захотим в дальнейшем поменять его, то можно поменять лишь данный параметр
+    private static Comparator<Student> comp;
+
+    static{
+        comp = StudentComparator.FullComparison.getFullComparison();
+    }
 
     private Student(String group, Double avgScore, Integer gradeBookNumber) {
+        super();
         this.group = group;
         this.avgScore = avgScore;
         this.gradeBookNumber = gradeBookNumber;
@@ -26,10 +39,23 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "group=" + group +
-                ", avgScore=" + avgScore +
-                ", gradeBookNumber=" + gradeBookNumber +
+                " group=" + group +
+                ", \tavgScore=" + avgScore +
+                ", \tgradeBookNumber=" + gradeBookNumber +
                 '}';
+    }
+
+    public static Comparator<Student> getComp() {
+        return comp;
+    }
+
+    public static void setComp(Comparator<Student> comp) {
+        Student.comp = comp;
+    }
+
+    @Override
+    public int compTo(Student obj) {
+        return comp.compare(this, obj);
     }
 
     public static class StudentBuilder {

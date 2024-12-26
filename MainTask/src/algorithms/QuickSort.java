@@ -1,5 +1,8 @@
 package algorithms;
 
+import models.ComparableClass;
+import models.Filterable;
+
 import java.util.*;
 
 public class QuickSort {
@@ -12,14 +15,13 @@ public class QuickSort {
     /**
      * Быстрая сортировка
      * @param list список некоторых элементов
-     * @param comp прописанный компаратор, по которому сравниваются объекты в list
-     * @param <T>  класс, для которого прописан компаратор
+     * @param <T> Filterable класс
      */
-    public static <T> void sort(List<T> list, Comparator<T> comp) {
-        quickSort(list, comp, 0, list.size());
+    public static <T extends Filterable<T>> void sort(List<T> list) {
+        quickSort(list, 0, list.size());
     }
 
-    private static <T> void quickSort(List<T> list, Comparator<T> comp, int left, int right) {
+    protected static <T extends Filterable<T>> void quickSort(List<T> list, int left, int right) {
         if (right > left) {
             // Опорный объект, относительно которого будет строиться распределение, выбирается случайным образом
             // Можно улучшить в дальнейшем посредством увеличения количества случайных элементов и выбор среди них среднее значение
@@ -30,13 +32,13 @@ public class QuickSort {
             Greatest g = new Greatest();
 
             // Разделение на большие и малые числа относительно выбранного ранее опорного элемента
-            int p = partition(list, comp, left, right, pivot, g); // слева от p все числа меньше опорного
-            quickSort(list, comp, left, p);
-            quickSort(list, comp, g.value, right);
+            int p = partition(list, left, right, pivot, g); // слева от p все числа меньше опорного
+            quickSort(list, left, p);
+            quickSort(list, g.value, right);
         }
     }
 
-    private static <T> int partition(List<T> list, Comparator<T> comp, int left, int right, int supElementIndex, Greatest g) {
+    private static <T extends Filterable<T>> int partition(List<T> list, int left, int right, int supElementIndex, Greatest g) {
         // указатели на элементы e = equal, g = great
         int equal = left, great = left;
 
@@ -49,7 +51,7 @@ public class QuickSort {
         for (int i = left; i < right; i++)
         {
             // 1.
-            if (comp.compare(list.get(i), pivot) < 0)
+            if (list.get(i).compTo(pivot) < 0)
             {
                 T temp = list.get(i);
                 list.set(i, list.get(great));
@@ -61,7 +63,7 @@ public class QuickSort {
             }
 
             // 2.
-            if (comp.compare(list.get(i), pivot) == 0)
+            if (list.get(i).compTo(pivot) == 0)
             {
                 T temp = list.get(i);
                 list.set(i, list.get(great));

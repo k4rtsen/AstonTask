@@ -26,11 +26,10 @@ public class AdditionalSort {
 
     private static <T> void sort(List<T> array, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
-            int pivot = getMedianPivot(array);
+            int pivot = getMedianPivot(array, lowIndex, highIndex);
 
             swap(array, pivot, highIndex);
             pivot = highIndex;
-
 
             int leftPointer = lowIndex;
             int rightPointer = highIndex;
@@ -78,10 +77,10 @@ public class AdditionalSort {
         throw new IllegalArgumentException("Объект этого класса не поддерживается");
     }
 
-    private static <T> int getMedianPivot(List<T> array) {
-        int middleIndex = (int)Math.floor(array.size() / 2.0);
-        T firstElement = array.getFirst();
-        T lastElement = array.getLast();
+    private static <T> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
+        int middleIndex = (int)Math.floor((highIndex - lowIndex) / 2.0);
+        T firstElement = array.get(lowIndex);
+        T lastElement = array.get(highIndex);
         T middleElement = array.get(middleIndex);
         Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
         List<T> elements = Arrays.asList(firstElement, lastElement, middleElement);
