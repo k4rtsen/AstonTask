@@ -35,8 +35,6 @@ public class AdditionalSort {
             int leftPointer = lowIndex;
             int rightPointer = highIndex;
 
-            Bus.setComp(new BusComparator.ByNumber()); // УБРАТЬ
-
             while (leftPointer < rightPointer) {
 
                 while (array.get(leftPointer).compTo(array.get(pivot)) < 0 && leftPointer < rightPointer) {
