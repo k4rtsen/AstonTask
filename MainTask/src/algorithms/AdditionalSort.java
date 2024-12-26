@@ -12,7 +12,7 @@ public class AdditionalSort {
 
         for (int i = 0; i < array.size(); i++) {
             T object = array.get(i);
-            if (isEven(object)) {
+            if (object.isEven()) {
                 evenIndices.add(i);
                 evenObjects.add(object);
             }
@@ -34,6 +34,8 @@ public class AdditionalSort {
 
             int leftPointer = lowIndex;
             int rightPointer = highIndex;
+
+            Bus.setComp(new BusComparator.ByNumber()); // УБРАТЬ
 
             while (leftPointer < rightPointer) {
 
@@ -62,27 +64,28 @@ public class AdditionalSort {
         array.set(index2, temp);
     }
 
-    private static <T> boolean isEven(T object) {
-        int value = getNumericFieldValue(object);
-        return value % 2 == 0;
-    }
+//    private static <T> boolean isEven(T object) {
+//        int value = getNumericFieldValue(object);
+//        return value % 2 == 0;
+//    }
+//
+//    private static <T> int getNumericFieldValue(T object) {
+//        if (object instanceof Bus)
+//            return ((Bus) object).getNumber();
+//        if (object instanceof Student)
+//            return ((Student) object).getGradeBookNumber();
+//        if (object instanceof User)
+//            return ((User) object).getId();
+//        throw new IllegalArgumentException("Объект этого класса не поддерживается");
+//    }
 
-    private static <T> int getNumericFieldValue(T object) {
-        if (object instanceof Bus)
-            return ((Bus) object).getNumber();
-        if (object instanceof Student)
-            return ((Student) object).getGradeBookNumber();
-        if (object instanceof User)
-            return ((User) object).getId();
-        throw new IllegalArgumentException("Объект этого класса не поддерживается");
-    }
-
-    private static <T> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
+    private static <T extends Filterable<T>> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
         int middleIndex = (int)Math.floor((highIndex - lowIndex) / 2.0);
         T firstElement = array.get(lowIndex);
         T lastElement = array.get(highIndex);
         T middleElement = array.get(middleIndex);
         Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
+//        Comparator<T> comparator = array.getFirst().getComp();
         List<T> elements = Arrays.asList(firstElement, lastElement, middleElement);
         elements.sort(comparator);
         return array.indexOf(elements.get(1));
