@@ -61,6 +61,11 @@ public class User implements Filterable<User>{
         return comp.compare(this, obj);
     }
 
+    @Override
+    public boolean isEven() {
+        return id % 2 == 0;
+    }
+
     public static class UserBuilder {
         private Integer id;
         private String name;

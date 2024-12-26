@@ -57,6 +57,11 @@ public class Bus implements Filterable<Bus> {
         return comp.compare(this, obj);
     }
 
+    @Override
+    public boolean isEven() {
+        return number % 2 == 0;
+    }
+
     public static class BusBuilder {
         private Integer number;
         private String model;

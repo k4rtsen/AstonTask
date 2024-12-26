@@ -58,6 +58,11 @@ public class Student implements Filterable<Student>{
         return comp.compare(this, obj);
     }
 
+    @Override
+    public boolean isEven() {
+        return gradeBookNumber % 2 == 0;
+    }
+
     public static class StudentBuilder {
         private String group;
         private double avgScore;

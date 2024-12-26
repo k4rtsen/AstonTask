@@ -9,4 +9,6 @@ public interface Filterable<T> {
      * @return negative num if this object less than argument abject (this < obj), zero if objects are equal and positive num if this object less than argument abject (this > obj)
      */
     public int compTo(T obj);
+
+    public boolean isEven();
 }
