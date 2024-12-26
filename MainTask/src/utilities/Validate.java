@@ -6,9 +6,6 @@ import models.*;
  * Класс для валидации данных
  */
 public class Validate {
-    static final int USER_PASSWORD_LENGTH = 8;
-    static final String SPECIAL_FOR_PASSWORD = "!@$^&*";
-
     /**
      * Валидация объекта Bus, поле номер (Number)
      * целое положительное число от 2 до 5 знаков
@@ -57,11 +54,14 @@ public class Validate {
      * @return
      */
     public static boolean UserPasswordValidate(String data) {
-        return (data.length() == USER_PASSWORD_LENGTH)
-                & data.matches(".*\\d.*")
-                & data.matches(".*[" + SPECIAL_FOR_PASSWORD + "].*")
-                & data.matches(".*[A-Z].*")
-                & data.matches(".*[a-z].*");
+        int USER_PASSWORD_LENGTH = 8;
+        String SPECIAL_FOR_PASSWORD = "!@$^&*";
+        String REGEX_FOR_PASSWORD_CHECK = "^(?=.*[A-Z])(?=.*["
+                + SPECIAL_FOR_PASSWORD
+                + "])(?=.*[0-9])(?=.*[a-z]).{"
+                + USER_PASSWORD_LENGTH
+                +"}$";
+        return data.matches(REGEX_FOR_PASSWORD_CHECK);
     }
 
     /**
