@@ -10,8 +10,16 @@ import java.util.Scanner;
 
 import static utilities.FileUtilities.fileWriting;
 
+/**
+ * Класс для сортировок по разным полям
+ */
 public class ActionQuickSort {
-
+    /**
+     * Сортировка массива автобусов по выбираемому полю
+     * @param buses массив автобусов
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortBus(List<Bus> buses, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
@@ -89,7 +97,12 @@ public class ActionQuickSort {
         }
     }
 
-
+    /**
+     * Сортировка массива пользователей по выбираемому полю
+     * @param users массив пользователей
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortUser(List<User> users, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
@@ -181,7 +194,12 @@ public class ActionQuickSort {
         }
     }
 
-
+    /**
+     * Сортировка массива студентов по выбираемому полю
+     * @param students массив студентов
+     * @param sortType тип сортировки, базовая или дополнительная (чет \ нечет)
+     * @throws IOException
+     */
     public static void QuickSortStudent(List<Student> students, String sortType) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String sortField ="""
