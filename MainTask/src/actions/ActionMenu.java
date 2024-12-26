@@ -16,7 +16,7 @@ import static actions.ActionBinarySearch.*;
 import static utilities.FileUtilities.*;
 
 public class ActionMenu {
-    static final String actionMenu = """
+    private static final String actionMenu = """
                 
                 Массив %s (содержит %d записей)
                 Выберите действие:
@@ -46,31 +46,23 @@ public class ActionMenu {
                 case "2":
                     QuickSortBusDefault(buses);
                     break;
-
                 case "3":
                     QuickSortBus(buses, "base");
                     break;
-
                 case "4":
                     QuickSortBus(buses, "additional");
                     break;
-
                 case "5":
                     System.out.println(BinarySearchBus(buses));
                     break;
-
                 case "0":
                     System.out.print("\nВозврат в предыдущее меню.\n");
                     break;
-
                 default:
                     System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
-
         } while (!inputAction.equals("0"));
     }
-
-
 
     public static void actionMenuUser(List<User> users) throws IOException {
         Scanner actionScan = new Scanner(System.in);
@@ -87,34 +79,26 @@ public class ActionMenu {
                     System.out.println("\nЭлементы в массиве User:");
                     users.forEach(System.out::println);
                     break;
-
                 case "2":
                     QuickSortUserDefault(users);
                     break;
-
                 case "3":
                     QuickSortUser(users, "base");
                     break;
-
                 case "4":
                     QuickSortUser(users, "additional");
                     break;
-
                 case "5":
                     System.out.println(BinarySearchUser(users));
                     break;
-
                 case "0":
                     System.out.print("\nВозврат в предыдущее меню.\n");
                     break;
-
                 default:
                     System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
-
         } while (!inputAction.equals("0"));
     }
-
 
     public static void actionMenuStudent(List<Student> students) throws IOException {
         Scanner actionScan = new Scanner(System.in);
@@ -131,33 +115,24 @@ public class ActionMenu {
                     System.out.println("\nЭлементы в массиве Student:");
                     students.forEach(System.out::println);
                     break;
-
                 case "2":
                     QuickSortStudentDefault(students);
                     break;
-
                 case "3":
                     QuickSortStudent(students, "base");
                     break;
-
                 case "4":
                     QuickSortStudent(students, "additional");
                     break;
-
                 case "5":
                     System.out.println(BinarySearchStudent(students));
                     break;
-
                 case "0":
                     System.out.print("\nВозврат в предыдущее меню.\n");
                     break;
-
                 default:
                     System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
-
         } while (!inputAction.equals("0"));
     }
-
-
 }

@@ -225,8 +225,7 @@ public class ActionBinarySearch {
         return userResult;
     }
 
-
-    public static String BinarySearchStudent(List<Student> studens) throws IOException {
+    public static String BinarySearchStudent(List<Student> students) throws IOException {
         Scanner actionScan = new Scanner(System.in);
         String searchField = """
                 
@@ -240,7 +239,7 @@ public class ActionBinarySearch {
         boolean wasFind = false;
 
         do {
-            System.out.printf(searchField, "Student", studens.size());
+            System.out.printf(searchField, "Student", students.size());
             System.out.print("\n================\nВведите команду: ");
 
             inputAction = actionScan.nextLine();
@@ -272,11 +271,11 @@ public class ActionBinarySearch {
             case "1":
                 lookingStudent = studentBuilder.setGroup(inputSearch).setScore(1.0).setGradeBookNum(1).build();
                 Student.setComp(new StudentComparator.ByGroup());
-                index = BinarySearch.search(studens, lookingStudent);
+                index = BinarySearch.search(students, lookingStudent);
                 if (index == -1) {
                     studentResult = "Искомый студент не найден в массиве.";
                 } else {
-                    studentResult = "Студент найден: " + studens.get(index);
+                    studentResult = "Студент найден: " + students.get(index);
                     wasFind = true;
                 }
                 break;
@@ -288,11 +287,11 @@ public class ActionBinarySearch {
                 }
                 lookingStudent = studentBuilder.setGroup("A").setScore(Double.parseDouble(inputSearch)).setGradeBookNum(1).build();
                 Student.setComp(new StudentComparator.ByScore());
-                index = BinarySearch.search(studens, lookingStudent);
+                index = BinarySearch.search(students, lookingStudent);
                 if (index == -1) {
                     studentResult = "Искомый студент не найден в массиве.";
                 } else {
-                    studentResult = "Студент найден: " + studens.get(index);
+                    studentResult = "Студент найден: " + students.get(index);
                     wasFind = true;
                 }
                 break;
@@ -304,11 +303,11 @@ public class ActionBinarySearch {
                 }
                 lookingStudent = studentBuilder.setGroup("A").setScore(1.0).setGradeBookNum(Integer.parseInt(inputSearch)).build();
                 Student.setComp(new StudentComparator.ByGradeBook());
-                index = BinarySearch.search(studens, lookingStudent);
+                index = BinarySearch.search(students, lookingStudent);
                 if (index == -1) {
                     studentResult = "Искомый студент не найден в массиве.";
                 } else {
-                    studentResult = "Студент найден: " + studens.get(index);
+                    studentResult = "Студент найден: " + students.get(index);
                     wasFind = true;
                 }
                 break;
