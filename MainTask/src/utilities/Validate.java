@@ -16,14 +16,7 @@ public class Validate {
      * @return
      */
     public static boolean BusNumberValidate(String data) {
-        if (data.matches("-?\\d+")) {
-            if ((data.length() >= 2)
-                    & (data.length() <= 5)) {
-                if ((Integer.parseInt(data) > 0)) {
-                    return true;
-                } else return false;
-            } else return false;
-        } else return false;
+        return data.matches("^[0-9]{2,5}$");
     }
 
     /**
@@ -33,12 +26,7 @@ public class Validate {
      * @return
      */
     public static boolean BusModelValidate(String data) {
-       if (data.matches("^[A-Za-z]+$")) {
-           if ((data.length() >= 3)
-                   & (data.length() <= 10)) {
-               return true;
-           } else return false;
-       } else return false;
+        return data.matches("^[A-Za-z]{3,10}$");
     }
 
     /**
@@ -48,14 +36,7 @@ public class Validate {
      * @return
      */
     public static boolean BusMileageValidate(String data) {
-        if (data.matches("-?\\d+")) {
-            if ((data.length() >= 2)
-                    & (data.length() <= 8)) {
-                 if (Integer.parseInt(data) > 0) {
-                     return true;
-                 } else return false;
-            } else return false;
-        } else return false;
+        return data.matches("^[0-9]{2,8}$");
     }
 
     /**
@@ -65,12 +46,7 @@ public class Validate {
      * @return
      */
     public static boolean UserNameValidate(String data) {
-        if (data.matches("^[A-Za-z]+$")) {
-            if ((data.length() >= 2)
-                    & (data.length() <= 10)) {
-                return true;
-            } else return false;
-        } else return false;
+        return data.matches("^[A-Za-z]{2,10}$");
     }
 
     /**
@@ -99,30 +75,7 @@ public class Validate {
      * @return
      */
     public static boolean UserEMailValidate(String data) {
-        String[] tmpArr = data.split("@");
-        //в почте только 1 символ @
-        if (tmpArr.length == 2) {
-            //имя почты только прописные латиница, от 2 до 20 символов
-            if ((tmpArr[0].matches("^[a-z0-9]+$"))
-                    & (tmpArr[0].length() >= 2)
-                    & (tmpArr[0].length() <= 20)) {
-                String[] tmpArr1 = tmpArr[1].split("\\.");
-                //во 2й части почты только 1 символ .
-                if (tmpArr1.length == 2) {
-                    //домен почты только прописные латиница, от 2 до 10 символов
-                    if ((tmpArr1[0].matches("^[a-z0-9]+$"))
-                            & (tmpArr1[0].length() >= 2)
-                            & (tmpArr1[0].length() <= 10)) {
-                        //имя почты только прописные латиница, от 2 до 4 символов
-                        if ((tmpArr1[1].length() >= 2)
-                                & (tmpArr1[1].length() <= 4)
-                                & (tmpArr1[1].matches("^[a-z]+$"))) {
-                            return true;
-                        }  else return false;
-                    } else return false;
-                } else return false;
-            } else return false;
-        } else return false;
+        return data.matches("^[a-z]{2,20}+@[a-z]{2,10}+.[a-z]{2,4}$");
     }
 
     /**
@@ -134,17 +87,7 @@ public class Validate {
      * @return
      */
     public static boolean StudentGroupValidate(String data) {
-        if (data.matches("^[A-Z0-9 -]+$")) {
-            String[] tmpArr = data.split("-");
-            if (tmpArr.length == 2) {
-                if (tmpArr[0].length() == 1) {
-                    if ((tmpArr[1].length() == 3)
-                            & (tmpArr[1].matches("^[0-9]+$"))) {
-                        return true;
-                    } else return false;
-                } else return false;
-            } else return false;
-        } else return false;
+        return data.matches("^[A-Z]{1}+-[0-9]{3}$");
     }
 
     /**
@@ -155,10 +98,8 @@ public class Validate {
      */
     public static boolean StudentAverageScoreValidate(String data) {
         if (data.matches("^(0|[1-9]\\d*)([.,]\\d+)?")) {
-            if ((Double.parseDouble(data) > 0)
-                    & (Double.parseDouble(data) <= 10)) {
-                return true;
-            } else return false;
+            return (Double.parseDouble(data) > 0)
+                    & (Double.parseDouble(data) <= 10);
         } else return false;
     }
 
@@ -169,14 +110,7 @@ public class Validate {
      * @return
      */
     public static boolean StudentGradeBookValidate(String data) {
-        if (data.matches("-?\\d+")) {
-            if ((data.length() >= 3)
-                    & (data.length() <= 6)) {
-                if ((Integer.parseInt(data) > 0)) {
-                    return true;
-                } else return false;
-            } else return false;
-        } else return false;
+        return data.matches("^[0-9]{3,6}$");
     }
 
     /**
