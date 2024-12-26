@@ -2,9 +2,7 @@ package models;
 
 import comparators.StudentComparator;
 
-import javax.sql.rowset.FilteredRowSet;
 import java.util.Comparator;
-import java.util.logging.Filter;
 
 public class Student implements Filterable<Student>{
     private final String group;

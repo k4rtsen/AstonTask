@@ -1,14 +1,21 @@
 package algorithms;
 
-import models.ComparableClass;
 import models.Filterable;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Класс бинарного поиска
+ */
 public class BinarySearch {
 
+    /**
+     * Поиск элемента с помощью бинарного поиска, на отсортированном массиве
+     * @param list коллекция, в которой необходимо осуществить поиск
+     * @param target искомый элемент
+     * @return индекс элемента в коллекции или -1, если элемент не найден
+     * @param <T> тип элемента коллекции
+     */
     public static <T extends Filterable<T>> int search(List<T> list, T target) {
         return search(list, target, 0, list.size());
     }
@@ -16,7 +23,7 @@ public class BinarySearch {
     private static <T extends Filterable<T>> int search(List<T> list, T target, int low, int high) {
         int middle = low  + ((high - low) / 2);
 
-        if (high < low) {
+        if (middle < 0 || middle >= list.size() || high < low) {
             return -1;
         }
 

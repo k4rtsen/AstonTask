@@ -5,18 +5,12 @@ import enums.DomainUserEnum;
 import enums.MailUserEnum;
 import enums.UserNameEnum;
 
+import static utilities.Constants.*;
+
 /**
  * Утилитарный класс с разными функциями
  */
-public final class ClownUtilities {
-    static final int USER_EMAIL_LENGTH = 12;
-    static final int USER_PASSWORD_LENGTH = 8;
-    static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static final String NUMBERS_FOR_PASSWORD = "1234567890";
-    static final String SPECIAL_FOR_PASSWORD = "!@$%^&*";
-
-    private ClownUtilities() {
-    }
+public final class RandomUtilities {
 
     /**
      * Генератор случайных чисел в заданном диапазоне
@@ -63,19 +57,13 @@ public final class ClownUtilities {
      */
     public static String getRandomUserPassword() {
         StringBuilder password;
-
         do {
             password = new StringBuilder();
             for (int i = 0; i < USER_PASSWORD_LENGTH; i++) {
                 password.append((LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD)
                         .charAt(getRandomNumber(1, (LETTERS_FOR_PASSWORD+NUMBERS_FOR_PASSWORD+SPECIAL_FOR_PASSWORD).length())));
             }
-
-        } while (!password.toString().matches(".*\\d.*")
-                | !password.toString().matches(".*[" + SPECIAL_FOR_PASSWORD +"].*")
-                | !password.toString().matches(".*[A-Z].*")
-                | !password.toString().matches(".*[a-z].*"));
-
+        } while (!password.toString().matches(REGEX_FOR_PASSWORD_CHECK));
         return password.toString();
     }
 

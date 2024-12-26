@@ -1,6 +1,5 @@
 package comparators;
 
-import models.Bus;
 import models.Student;
 
 import java.util.Comparator;
