@@ -26,7 +26,7 @@ public class BusActions implements Actions<Bus> {
      */
     @Override
     public List<Bus> fillByFile() {
-        String fileName = ".\\MainTask\\input_Bus.txt";
+        String fileName = "MainTask/input_Bus.txt";
         //TODO add checkers for fields
         return readFile(fileName, (data, _) -> busBuilder
                 .setNumber(Integer.parseInt(data[0]))

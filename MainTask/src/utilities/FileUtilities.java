@@ -2,29 +2,37 @@ package utilities;
 
 import actions.Actions;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtilities {
+
+    private static String normalizePath(String fileName) {
+        return fileName.replaceAll("/", FileSystems.getDefault().getSeparator());
+    }
+
     /**
      * Запись в файл
      * @param info строка для записи
      * @throws IOException io exception
      */
     public static void fileWriting(String info) throws IOException {
-        String filePath = ".\\MainTask\\output.txt";
-        File file = new File(filePath);
+        String filePath = normalizePath("/MainTask/output.txt");
 
-        if (file.exists()) {
-            System.out.printf("Файл %s найден.\n", file.getCanonicalFile());
+        Path file = Paths.get(filePath);
+        if (Files.exists(file)) {
+            System.out.printf("Файл %s найден.\n", file.getFileName());
         } else {
-            System.out.printf("Файл %s НЕ найден, создан новый.\n", file.getCanonicalFile());
+            Files.createFile(file);
+            System.out.printf("Файл %s НЕ найден, создан новый.\n", file.getFileName());
+            return;
         }
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath, true))) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
             bufferedWriter.write(info + "\n");
         }
         catch (IOException e) {
@@ -33,22 +41,21 @@ public class FileUtilities {
     }
 
     public static <T> List<T> readFile(String fileName, Actions.Builder<T> builder) {
-        File file = new File(fileName);
-        List<T> models = new ArrayList<>();
+        Path file = Paths.get(normalizePath(fileName));
 
-        if (!file.exists()) {
+        if (!Files.exists(file)) {
             System.err.printf("Файл %s не найден, проверьте правильность пути\n", fileName);
             return null;
         }
+        List<T> models = new ArrayList<>();
 
         System.out.printf("Файл %s найден.\n", fileName);
-        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
+        try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
             int lineCount = 1;
             int count = 1;
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] tmpArr = line.split(";");
-                lineCount++;
                 if (tmpArr.length == 3) {
                     models.add(builder.callBuilder(tmpArr, count));
                     count++;
@@ -56,10 +63,10 @@ public class FileUtilities {
                     System.out.printf("Строка %s (под номером %d в файле) некорректна, она будет пропущена.\n",
                             line, lineCount);
                 }
+                lineCount++;
             }
-        } catch (IOException exception) {
-            //TODO correct exception handling
-            exception.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         if (models.isEmpty()) {
