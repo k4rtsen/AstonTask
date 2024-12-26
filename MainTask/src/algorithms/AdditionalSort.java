@@ -3,15 +3,16 @@ package algorithms;
 import comparators.*;
 import models.*;
 import java.util.*;
+import models.Filterable;
 
 public class AdditionalSort {
-    public static <T> void sort(List<T> array) {
+    public static <T extends Filterable<T>> void sort(List<T> array) {
         List<Integer> evenIndices = new ArrayList<>();
         List<T> evenObjects = new ArrayList<>();
 
         for (int i = 0; i < array.size(); i++) {
             T object = array.get(i);
-            if (isEven(object)) {
+            if (object.isEven()) {
                 evenIndices.add(i);
                 evenObjects.add(object);
             }
@@ -24,7 +25,7 @@ public class AdditionalSort {
         }
     }
 
-    private static <T> void sort(List<T> array, int lowIndex, int highIndex) {
+    private static <T extends Filterable<T>> void sort(List<T> array, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
             int pivot = getMedianPivot(array, lowIndex, highIndex);
 
@@ -34,15 +35,14 @@ public class AdditionalSort {
             int leftPointer = lowIndex;
             int rightPointer = highIndex;
 
-            Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
-
             while (leftPointer < rightPointer) {
 
-                while (comparator.compare(array.get(leftPointer), array.get(pivot)) < 0 && leftPointer < rightPointer) {
+                while (array.get(leftPointer).compTo(array.get(pivot)) < 0 && leftPointer < rightPointer) {
                     leftPointer++;
                 }
 
-                while (comparator.compare(array.get(rightPointer), array.get(pivot)) > 0 && leftPointer < rightPointer) {
+
+                while (array.get(rightPointer).compTo(array.get(pivot)) > 0 && leftPointer < rightPointer) {
                     rightPointer--;
                 }
 
@@ -62,27 +62,28 @@ public class AdditionalSort {
         array.set(index2, temp);
     }
 
-    private static <T> boolean isEven(T object) {
-        int value = getNumericFieldValue(object);
-        return value % 2 == 0;
-    }
+//    private static <T> boolean isEven(T object) {
+//        int value = getNumericFieldValue(object);
+//        return value % 2 == 0;
+//    }
+//
+//    private static <T> int getNumericFieldValue(T object) {
+//        if (object instanceof Bus)
+//            return ((Bus) object).getNumber();
+//        if (object instanceof Student)
+//            return ((Student) object).getGradeBookNumber();
+//        if (object instanceof User)
+//            return ((User) object).getId();
+//        throw new IllegalArgumentException("Объект этого класса не поддерживается");
+//    }
 
-    private static <T> int getNumericFieldValue(T object) {
-        if (object instanceof Bus)
-            return ((Bus) object).getNumber();
-        if (object instanceof Student)
-            return ((Student) object).getGradeBookNumber();
-        if (object instanceof User)
-            return ((User) object).getId();
-        throw new IllegalArgumentException("Объект этого класса не поддерживается");
-    }
-
-    private static <T> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
+    private static <T extends Filterable<T>> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
         int middleIndex = (int)Math.floor((highIndex - lowIndex) / 2.0);
         T firstElement = array.get(lowIndex);
         T lastElement = array.get(highIndex);
         T middleElement = array.get(middleIndex);
         Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
+//        Comparator<T> comparator = array.getFirst().getComp();
         List<T> elements = Arrays.asList(firstElement, lastElement, middleElement);
         elements.sort(comparator);
         return array.indexOf(elements.get(1));
