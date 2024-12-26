@@ -79,18 +79,18 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
         Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
 
         if (comp instanceof StudentComparator.ByGroup) {
-            String group = readString("Введите группу студента (0 - отмена)");
+            String group = readString("Введите группу студента (0 - отмена): ");
             if (group.equals("0")) return null;
             lookingStudent = studentBuilder.setGroup(group).setScore(DEFAULT_STUDENT_SCORE)
                     .setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM).build();
         } else if (comp instanceof StudentComparator.ByScore) {
-            double score = readDouble("Введите средний балл студента");
+            double score = readDouble("Введите средний балл студента (0 - отмена): ");
             if (score == 0) return null;
             lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
                     .setScore(score).setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM)
                     .build();
         } else {
-            int gradeBookNum = readInt("Введите номер зачетной книжки студент");
+            int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
             if (gradeBookNum == 0) return null;
             lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
                     .setScore(DEFAULT_STUDENT_SCORE).setGradeBookNum(gradeBookNum)

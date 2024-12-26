@@ -81,23 +81,23 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
         Bus.BusBuilder busBuilder = new Bus.BusBuilder();
 
         if (comp instanceof BusComparator.ByNumber) {
-            int number = readInt("Введите номер автобуса (0 - отмена)");
+            int number = readInt("Введите номер автобуса (0 - отмена): ");
             if (number == 0) return null;
             lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
         } else if (comp instanceof BusComparator.ByModel) {
-            String model = readString("Введите модель автобуса (0 - отмена)");
+            String model = readString("Введите модель автобуса (0 - отмена): ");
             if (model.equals("0")) return null;
             lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
         } else if (comp instanceof BusComparator.ByMileage) {
-            int mileage = readInt("Введите пробег автобуса (0 - отмена)");
+            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
             if (mileage == 0) return null;
             lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
         } else {
-            int number = readInt("Введите номер автобуса (0 - отмена)");
+            int number = readInt("Введите номер автобуса (0 - отмена): ");
             if (number == 0) return null;
-            String model = readString("Введите модель автобуса (0 - отмена)");
+            String model = readString("Введите модель автобуса (0 - отмена): ");
             if (model.equals("0")) return null;
-            int mileage = readInt("Введите пробег автобуса (0 - отмена)");
+            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
             if (mileage == 0) return null;
             lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
         }
