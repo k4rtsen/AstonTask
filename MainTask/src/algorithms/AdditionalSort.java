@@ -89,23 +89,11 @@ public class AdditionalSort {
     }
 
     private static <T> Comparator<T> getComparatorByClassName(String className) {
-        Comparator<T> comparator = null;
-        switch (className) {
-            case "Bus":
-                comparator = (Comparator<T>) new BusComparator.ByNumber();
-                break;
-
-            case "Student":
-                comparator = (Comparator<T>) new StudentComparator.ByGradeBook();
-                break;
-
-            case "User":
-                comparator = (Comparator<T>) new UserComparator.ById();
-                break;
-
-            default:
-                throw new IllegalArgumentException("Объект этого класса не поддерживается");
-        }
-        return comparator;
+        return switch (className) {
+            case "Bus" -> (Comparator<T>) new BusComparator.ByNumber();
+            case "Student" -> (Comparator<T>) new StudentComparator.ByGradeBook();
+            case "User" -> (Comparator<T>) new UserComparator.ById();
+            default -> throw new IllegalArgumentException("Объект этого класса не поддерживается");
+        };
     }
 }

@@ -2,7 +2,6 @@ package models;
 
 import comparators.BusComparator;
 
-import javax.sql.rowset.FilteredRowSet;
 import java.util.Comparator;
 
 public class Bus implements Filterable<Bus> {

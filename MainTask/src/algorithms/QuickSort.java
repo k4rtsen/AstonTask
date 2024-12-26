@@ -1,6 +1,5 @@
 package algorithms;
 
-import models.ComparableClass;
 import models.Filterable;
 
 import java.util.*;

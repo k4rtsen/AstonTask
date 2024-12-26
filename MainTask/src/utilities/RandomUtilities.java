@@ -5,23 +5,12 @@ import enums.DomainUserEnum;
 import enums.MailUserEnum;
 import enums.UserNameEnum;
 
+import static utilities.Constants.*;
+
 /**
  * Утилитарный класс с разными функциями
  */
-public final class ClownUtilities {
-    static final int USER_EMAIL_LENGTH = 12;
-    static final int USER_PASSWORD_LENGTH = 8;
-    static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static final String NUMBERS_FOR_PASSWORD = "1234567890";
-    static final String SPECIAL_FOR_PASSWORD = "!@$^&*";
-    static final String REGEX_FOR_PASSWORD_CHECK = "^(?=.*[A-Z])(?=.*["
-            + SPECIAL_FOR_PASSWORD
-            + "])(?=.*[0-9])(?=.*[a-z]).{"
-            + USER_PASSWORD_LENGTH
-            +"}$";
-
-    private ClownUtilities() {
-    }
+public final class RandomUtilities {
 
     /**
      * Генератор случайных чисел в заданном диапазоне
