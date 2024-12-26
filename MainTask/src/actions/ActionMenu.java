@@ -42,7 +42,6 @@ public class ActionMenu {
                     System.out.println("\nЭлементы в массиве Bus:");
                     buses.forEach(System.out::println);
                     break;
-
                 case "2":
                     QuickSortBusDefault(buses);
                     break;
