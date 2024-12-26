@@ -10,7 +10,7 @@ public class Validate {
      * Валидация объекта Bus, поле номер (Number)
      * целое положительное число от 2 до 5 знаков
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean BusNumberValidate(String data) {
         return data.matches("^[0-9]{2,5}$");
@@ -20,7 +20,7 @@ public class Validate {
      * Валидация объекта Bus, поле модель (Model)
      * строка из латинских букв от 3 до 10 символов
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean BusModelValidate(String data) {
         return data.matches("^[A-Za-z]{3,10}$");
@@ -30,7 +30,7 @@ public class Validate {
      * Валидация объекта Bus, поле пробег (Mileage)
      * целое положительное число от 2 до 8 знаков
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean BusMileageValidate(String data) {
         return data.matches("^[0-9]{2,8}$");
@@ -40,7 +40,7 @@ public class Validate {
      * Валидация объекта User, поле имя (Name)
      * строка состоящая из латинских букв от 2 до 10 символов
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean UserNameValidate(String data) {
         return data.matches("^[A-Za-z]{2,10}$");
@@ -51,7 +51,7 @@ public class Validate {
      * длина 8 символов, обязательное наличие
      * заглавной, прописной латинских букв, цифры, спец.символа !@$^&*
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean UserPasswordValidate(String data) {
         int USER_PASSWORD_LENGTH = 8;
@@ -72,7 +72,7 @@ public class Validate {
      * верхний_домен - латинские прописные буквы от 2 до 4 символов
      * пример - example@maildomain.com
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean UserEMailValidate(String data) {
         return data.matches("^[a-z]{2,20}+@[a-z]{2,10}+.[a-z]{2,4}$");
@@ -84,7 +84,7 @@ public class Validate {
      * X - любая заглавная латинская буква
      * NNN - 3х значное число (001 допускается)
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean StudentGroupValidate(String data) {
         return data.matches("^[A-Z]{1}+-[0-9]{3}$");
@@ -94,7 +94,7 @@ public class Validate {
      * Валидация объекта Student, поля среднего балла (AverageScore)
      * положительное число, целое или дробное (максимальный балл 10.0)
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean StudentAverageScoreValidate(String data) {
         if (data.matches("^(0|[1-9]\\d*)([.,]\\d+)?")) {
@@ -107,7 +107,7 @@ public class Validate {
      * Валидация объекта Student, поля зачетной книжки (GradeBook)
      * положительное число от 3 до 6 символов
      * @param data строка для проверки
-     * @return
+     * @return true or false
      */
     public static boolean StudentGradeBookValidate(String data) {
         return data.matches("^[0-9]{3,6}$");
@@ -116,7 +116,7 @@ public class Validate {
     /**
      * Проводит валидацию для объекта Bus
      * @param line входная строка их считываемого файла
-     * @return
+     * @return экземпляр Bus или null если не прошел валидацию
      */
     public static Bus BusLineValidate(String line) {
         String[] tmpArr = line.split(";");
@@ -138,7 +138,7 @@ public class Validate {
      * Проводит валидацию для объекта User
      * @param line входная строка их считываемого файла
      * @param count счетчик id
-     * @return
+     * @return экземпляр User или null если не прошел валидацию
      */
     public static User UserLineValidate(String line, int count) {
         String[] tmpArr = line.split(";");
@@ -160,7 +160,7 @@ public class Validate {
     /**
      * Проводит валидацию для объекта Student
      * @param line входная строка их считываемого файла
-     * @return
+     * @return экземпляр Student или null если не прошел валидацию
      */
     public static Student StudentLineValidate(String line) {
         String[] tmpArr = line.split(";");
