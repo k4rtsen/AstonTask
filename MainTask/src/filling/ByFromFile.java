@@ -3,9 +3,9 @@ package filling;
 import models.*;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -18,16 +18,16 @@ public class ByFromFile {
     /**
      * Метод заполнения массива Bus из файла input_Bus.txt
      * @return массив List Bus
-     * @throws IOException
+     * @throws IOException io exception
      */
     public static List<Bus> fillBusFromFile() throws IOException {
-        File file = new File(".\\MainTask\\input_Bus.txt");
+        Path file = Paths.get(".\\MainTask\\input_Bus.txt");
         List<Bus> buses = new ArrayList<>();
 
-        if (file.exists()) {
-            System.out.printf("Файл %s найден.\n", file.getCanonicalFile());
+        if (Files.exists(file)) {
+            System.out.printf("Файл %s\\%s найден.\n", file.getParent(), file.getFileName());
 
-            try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
+            try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
                 int lineCount = 1;
                 String line;
                 Bus bus;
@@ -56,16 +56,16 @@ public class ByFromFile {
     /**
      * Метод заполнения массива User из файла input_User.txt
      * @return массив List User
-     * @throws IOException
+     * @throws IOException io exception
      */
     public static List<User> fillUserFromFile() throws IOException {
-        File file = new File(".\\MainTask\\input_User.txt");
+        Path file = Paths.get(".\\MainTask\\input_User.txt");
         List<User> users = new ArrayList<>();
 
-        if (file.exists()) {
-            System.out.printf("Файл %s найден.\n", file.getCanonicalFile());
+        if (Files.exists(file)) {
+            System.out.printf("Файл %s\\%s найден.\n", file.getParent(), file.getFileName());
 
-            try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
+            try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
                 int count = 1;
                 int lineCount = 1;
                 String line;
@@ -96,16 +96,16 @@ public class ByFromFile {
     /**
      * Метод заполнения массива Student из файла input_Student.txt
      * @return массив List Student
-     * @throws IOException
+     * @throws IOException io exception
      */
     public static List<Student> fillStudentFromFile() throws IOException {
-        File file = new File(".\\MainTask\\input_Student.txt");
+        Path file = Paths.get(".\\MainTask\\input_Student.txt");
         List<Student> students= new ArrayList<>();
 
-        if (file.exists()) {
-            System.out.printf("Файл %s найден.\n", file.getCanonicalFile());
+        if (Files.exists(file)) {
+            System.out.printf("Файл %s\\%s найден.\n", file.getParent(), file.getFileName());
 
-            try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
+            try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
                 int lineCount = 1;
                 String line;
                 Student student;

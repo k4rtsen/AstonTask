@@ -47,6 +47,17 @@ public class Validate {
     }
 
     /**
+     * Валидация строки на целое, положительное число
+     * @param data строка для проверки
+     * @return true or false
+     */
+    public static boolean PositiveIntegerValidate(String data) {
+        if (data.matches("^[0-9]$")) {
+            return Integer.parseInt(data) > 0;
+        } else return false;
+    }
+
+    /**
      * Валидация объекта User, поле пароль (Password)
      * длина 8 символов, обязательное наличие
      * заглавной, прописной латинских букв, цифры, спец.символа !@$^&*

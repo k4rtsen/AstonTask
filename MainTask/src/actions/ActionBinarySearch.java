@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static utilities.FileUtilities.fileWriting;
+import static utilities.Validate.*;
 
 public class ActionBinarySearch {
 
@@ -56,6 +57,10 @@ public class ActionBinarySearch {
 
         switch (inputAction) {
             case "1":
+                if (!BusNumberValidate(inputSearch)) {
+                    busResult = "Искомый автобус не найден в массиве.";
+                    break;
+                }
                 lookingBus = busBuilder.setModel("1").setNumber(Integer.parseInt(inputSearch)).setMileage(1).build();
                 Bus.setComp(new BusComparator.ByNumber());
                 index = BinarySearch.search(buses, lookingBus);
@@ -80,6 +85,10 @@ public class ActionBinarySearch {
                 break;
 
             case "3":
+                if (!BusMileageValidate(inputSearch)) {
+                    busResult = "Искомый автобус не найден в массиве.";
+                    break;
+                }
                 lookingBus = busBuilder.setModel("A").setNumber(1).setMileage(Integer.parseInt(inputSearch)).build();
                 Bus.setComp(new BusComparator.ByMileage());
                 index = BinarySearch.search(buses, lookingBus);
@@ -151,6 +160,10 @@ public class ActionBinarySearch {
 
         switch (inputAction) {
             case "1":
+                if (!PositiveIntegerValidate(inputSearch)) {
+                    userResult = "Искомый пользователь не найден в массиве.";
+                    break;
+                }
                 lookingUser = userBuilder.setId(Integer.parseInt(inputSearch)).setName("A").setPassword("B").setEmail("F").build();
                 User.setComp(new UserComparator.ById());
                 index = BinarySearch.search(users, lookingUser);
@@ -269,6 +282,10 @@ public class ActionBinarySearch {
                 break;
 
             case "2":
+                if (!StudentAverageScoreValidate(inputSearch)) {
+                    studentResult = "Искомый студент не найден в массиве.";
+                    break;
+                }
                 lookingStudent = studentBuilder.setGroup("A").setScore(Double.parseDouble(inputSearch)).setGradeBookNum(1).build();
                 Student.setComp(new StudentComparator.ByScore());
                 index = BinarySearch.search(studens, lookingStudent);
@@ -281,6 +298,10 @@ public class ActionBinarySearch {
                 break;
 
             case "3":
+                if (!PositiveIntegerValidate(inputSearch)) {
+                    studentResult = "Искомый студент не найден в массиве.";
+                    break;
+                }
                 lookingStudent = studentBuilder.setGroup("A").setScore(1.0).setGradeBookNum(Integer.parseInt(inputSearch)).build();
                 Student.setComp(new StudentComparator.ByGradeBook());
                 index = BinarySearch.search(studens, lookingStudent);
