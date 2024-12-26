@@ -5,6 +5,7 @@ import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.StudentComparator;
 import models.Student;
+import utilities.Validate;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,7 +38,7 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
     @Override
     public void defaultSort(List<Student> models) {
         Student.setComp(StudentComparator.FullComparison.getFullComparison());
-        sort(models, "\nМассив отсортирован по умолчанию (по группе).", false);
+        sort(models, "\nМассив отсортирован по умолчанию.", false);
     }
 
     @Override
@@ -91,32 +92,32 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
         Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
 
         switch (comp) {
-            case StudentComparator.ByGroup byGroup -> {
-                String group = readString("Введите группу студента (0 - отмена): ");
+            case StudentComparator.ByGroup _ -> {
+                String group = readString("Введите группу студента (0 - отмена)", Validate::studentGroupValidate);
                 if (group.equals("0")) return null;
                 lookingStudent = studentBuilder.setGroup(group).setScore(DEFAULT_STUDENT_SCORE)
                         .setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM).build();
             }
-            case StudentComparator.ByScore byScore -> {
-                double score = readDouble("Введите средний балл студента (0 - отмена): ");
+            case StudentComparator.ByScore _ -> {
+                double score = readDouble("Введите средний балл студента", Validate::studentAverageScoreValidate);
                 if (score == 0) return null;
                 lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
                         .setScore(score).setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM)
                         .build();
             }
-            case StudentComparator.ByGradeBook byGradeBook -> {
-                int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
+            case StudentComparator.ByGradeBook _ -> {
+                int gradeBookNum = readInt("Введите номер зачетной книжки студент", Validate::studentGradeBookValidate);
                 if (gradeBookNum == 0) return null;
                 lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
                         .setScore(DEFAULT_STUDENT_SCORE).setGradeBookNum(gradeBookNum)
                         .build();
             }
             case null, default -> {
-                String group = readString("Введите группу студента (0 - отмена): ");
+                String group = readString("Введите группу студента (0 - отмена)", Validate::studentGroupValidate);
                 if (group.equals("0")) return null;
-                double score = readDouble("Введите средний балл студента (0 - отмена): ");
+                double score = readDouble("Введите средний балл студента", Validate::studentAverageScoreValidate);
                 if (score == 0) return null;
-                int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
+                int gradeBookNum = readInt("Введите номер зачетной книжки студент", Validate::studentGradeBookValidate);
                 if (gradeBookNum == 0) return null;
                 lookingStudent = studentBuilder.setGroup(group).setScore(score).setGradeBookNum(gradeBookNum).build();
             }

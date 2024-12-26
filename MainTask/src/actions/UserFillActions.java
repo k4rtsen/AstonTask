@@ -2,6 +2,7 @@ package actions;
 
 import utilities.ManualInputUtilities;
 import models.User;
+import utilities.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import static utilities.ManualInputUtilities.readString;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.*;
 import static utilities.RandomUtilities.getRandomUserMail;
+import static utilities.Validate.*;
 
 public class UserFillActions implements FillActions<User> {
 
@@ -34,7 +36,8 @@ public class UserFillActions implements FillActions<User> {
                 .setName(data[0])
                 .setPassword(data[1])
                 .setEmail(data[2])
-                .build()
+                .build(),
+                (String[] data) -> userNameValidate(data[0]) && userPasswordValidate(data[1]) && userEMailValidate(data[2])
         );
     }
 
@@ -46,15 +49,15 @@ public class UserFillActions implements FillActions<User> {
     public List<User> fillManual() {
         return ManualInputUtilities.fillManual(getModelName(), (i) -> {
             String name = readString(String.format("%s[%d] - Введите имя пользователя (0 - отмена): ",
-                    getModelName(), i));
+                    getModelName(), i), Validate::userNameValidate);
             if (name.equals("0")) return null;
 
             String password = readString(String.format("%s[%d] - Введите пароль пользователя (0 - отмена): ",
-                    getModelName(), i));
+                    getModelName(), i), Validate::userPasswordValidate);
             if (password.equals("0")) return null;
 
             String email = readString(String.format("%s[%d] - Введите e-mail пользователя (0 - отмена): ",
-                    getModelName(), i));
+                    getModelName(), i), Validate::userEMailValidate);
             if (email.equals("0")) return null;
 
             return userBuilder
@@ -72,7 +75,8 @@ public class UserFillActions implements FillActions<User> {
      */
     @Override
     public List<User> fillRandom() {
-        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()));
+        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()),
+                Validate::isPositiveInteger);
         if (arraySize == 0) return null;
 
         List<User> models = new ArrayList<>(arraySize);

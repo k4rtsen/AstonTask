@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FileUtilities {
 
@@ -16,10 +17,10 @@ public class FileUtilities {
     }
 
     /**
-     * Запись в файл
-     * @param info строка для записи
-     * @throws IOException io exception
-     */
+    * Запись в файл
+    * @param info строка для записи
+    * @throws IOException io exception
+    */
     public static void fileWriting(String info) {
         String filePath = "output.txt";
 
@@ -43,7 +44,7 @@ public class FileUtilities {
         }
     }
 
-    public static <T> List<T> readFile(String fileName, FillActions.Builder<T> builder) {
+    public static <T> List<T> readFile(String fileName, FillActions.Builder<T> builder, Predicate<String[]> check) {
         Path file = Paths.get(normalizePath(fileName));
 
         if (!Files.exists(file)) {
@@ -59,8 +60,7 @@ public class FileUtilities {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] tmpArr = line.split(";");
-                if (tmpArr.length == 3) {
-//                    checker.check();
+                if (tmpArr.length == 3 && check.test(tmpArr)) {
                     models.add(builder.callBuilder(tmpArr, count));
                     count++;
                 } else {

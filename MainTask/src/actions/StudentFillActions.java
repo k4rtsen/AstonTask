@@ -2,6 +2,7 @@ package actions;
 
 import utilities.ManualInputUtilities;
 import models.Student;
+import utilities.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import static utilities.ManualInputUtilities.*;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.*;
 import static utilities.RandomUtilities.getRandomAverageScore;
+import static utilities.Validate.*;
 
 public class StudentFillActions implements FillActions<Student> {
     private static final models.Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
@@ -31,7 +33,9 @@ public class StudentFillActions implements FillActions<Student> {
                 .setGroup(data[0])
                 .setScore(Double.parseDouble(data[1]))
                 .setGradeBookNum(Integer.parseInt(data[2]))
-                .build()
+                .build(),
+                (String[] data) -> studentGroupValidate(data[0]) &&
+                        studentAverageScoreValidate(data[1]) && studentGradeBookValidate(data[2])
         );
     }
 
@@ -43,15 +47,14 @@ public class StudentFillActions implements FillActions<Student> {
     public List<Student> fillManual() {
         return ManualInputUtilities.fillManual(getModelName(), (i) -> {
             String group = readString(String.format("%s[%d] - Введите группу студента (0 - отмена): ",
-                    getModelName(), i));
+                    getModelName(), i), Validate::studentGroupValidate);
             if (group.equals("0")) return null;
             double averageScore = readDouble(String.format("%s[%d] - Введите средний балл студента (0 - отмена): ",
-                    getModelName(), i));
-            // TODO is it correct?
+                    getModelName(), i), Validate::studentAverageScoreValidate);
             if (averageScore == 0) return null;
 
             int gradeBook = readInt(String.format("%s[%d] - Введите номер зачетной книжки студента (0 - отмена): ",
-                    getModelName(), i));
+                    getModelName(), i), Validate::studentGradeBookValidate);
             if (gradeBook == 0) return null;
 
             return studentBuilder
@@ -68,7 +71,8 @@ public class StudentFillActions implements FillActions<Student> {
      */
     @Override
     public List<Student> fillRandom() {
-        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()));
+        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()),
+                Validate::isPositiveInteger);
         if (arraySize == 0) return null;
 
         List<Student> models = new ArrayList<>(arraySize);
