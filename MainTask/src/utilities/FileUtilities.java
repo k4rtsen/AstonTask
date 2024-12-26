@@ -1,6 +1,6 @@
 package utilities;
 
-import actions.Actions;
+import actions.FillActions;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,16 +20,19 @@ public class FileUtilities {
      * @param info строка для записи
      * @throws IOException io exception
      */
-    public static void fileWriting(String info) throws IOException {
-        String filePath = normalizePath("/MainTask/output.txt");
+    public static void fileWriting(String info) {
+        String filePath = normalizePath("MainTask/output.txt");
 
         Path file = Paths.get(filePath);
         if (Files.exists(file)) {
             System.out.printf("Файл %s найден.\n", file.getFileName());
         } else {
-            Files.createFile(file);
+            try {
+                Files.createFile(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.printf("Файл %s НЕ найден, создан новый.\n", file.getFileName());
-            return;
         }
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
@@ -40,7 +43,7 @@ public class FileUtilities {
         }
     }
 
-    public static <T> List<T> readFile(String fileName, Actions.Builder<T> builder) {
+    public static <T> List<T> readFile(String fileName, FillActions.Builder<T> builder) {
         Path file = Paths.get(normalizePath(fileName));
 
         if (!Files.exists(file)) {
@@ -57,6 +60,7 @@ public class FileUtilities {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] tmpArr = line.split(";");
                 if (tmpArr.length == 3) {
+//                    checker.check();
                     models.add(builder.callBuilder(tmpArr, count));
                     count++;
                 } else {

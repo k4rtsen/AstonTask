@@ -1,18 +1,18 @@
 package actions;
 
-import filling.ByManual;
+import utilities.ManualInputUtilities;
 import models.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static filling.ByManual.readInt;
-import static filling.ByManual.readString;
+import static utilities.ManualInputUtilities.readInt;
+import static utilities.ManualInputUtilities.readString;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.getRandomFromEnum;
 import static utilities.RandomUtilities.getRandomNumber;
 
-public class BusActions implements Actions<Bus> {
+public class BusFillActions implements FillActions<Bus> {
     private static final Bus.BusBuilder busBuilder = new Bus.BusBuilder();
 
     @Override
@@ -42,7 +42,7 @@ public class BusActions implements Actions<Bus> {
      */
     @Override
     public List<Bus> fillManual() {
-        return ByManual.fillManual(getModelName(), (i) -> {
+        return ManualInputUtilities.fillManual(getModelName(), (i) -> {
             int number = readInt(String.format("%s[%d] - Введите номер автобуса (0 - отмена): ", getModelName(), i));
             if (number == 0) return null;
 

@@ -1,17 +1,17 @@
 package actions;
 
-import filling.ByManual;
+import utilities.ManualInputUtilities;
 import models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static filling.ByManual.*;
+import static utilities.ManualInputUtilities.*;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.*;
 import static utilities.RandomUtilities.getRandomAverageScore;
 
-public class StudentActions implements Actions<Student> {
+public class StudentFillActions implements FillActions<Student> {
     private static final models.Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
 
     @Override
@@ -40,7 +40,7 @@ public class StudentActions implements Actions<Student> {
      */
     @Override
     public List<Student> fillManual() {
-        return ByManual.fillManual(getModelName(), (i) -> {
+        return ManualInputUtilities.fillManual(getModelName(), (i) -> {
             String group = readString(String.format("%s[%d] - Введите группу студента (0 - отмена): ",
                     getModelName(), i));
             if (group.equals("0")) return null;

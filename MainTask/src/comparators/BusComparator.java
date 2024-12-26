@@ -9,7 +9,7 @@ public class BusComparator {
     // только для сортировки
     public static class FullComparison {
         public static Comparator<Bus> getFullComparison() {
-            return new ByNumber().thenComparing(new ByModel().thenComparing(new ByMileage()));
+            return new ByNumber().thenComparing(new ByModel()).thenComparing(new ByMileage());
         }
     }
 

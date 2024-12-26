@@ -1,18 +1,18 @@
 package actions;
 
-import filling.ByManual;
+import utilities.ManualInputUtilities;
 import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static filling.ByManual.readInt;
-import static filling.ByManual.readString;
+import static utilities.ManualInputUtilities.readInt;
+import static utilities.ManualInputUtilities.readString;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.*;
 import static utilities.RandomUtilities.getRandomUserMail;
 
-public class UserActions implements Actions<User> {
+public class UserFillActions implements FillActions<User> {
 
     private static final User.UserBuilder userBuilder = new User.UserBuilder();
 
@@ -43,7 +43,7 @@ public class UserActions implements Actions<User> {
      */
     @Override
     public List<User> fillManual() {
-        return ByManual.fillManual(getModelName(), (i) -> {
+        return ManualInputUtilities.fillManual(getModelName(), (i) -> {
             String name = readString(String.format("%s[%d] - Введите имя пользователя (0 - отмена): ",
                     getModelName(), i));
             if (name.equals("0")) return null;

@@ -1,9 +1,7 @@
 import java.util.*;
 
-import actions.Actions;
-import actions.BusActions;
-import actions.StudentActions;
-import actions.UserActions;
+import actions.*;
+import enums.SortType;
 
 public class MainUI {
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,62 +29,119 @@ public class MainUI {
             switch (inputMenu) {
                 case "1":
                     System.out.println("\nВы выбрали класс Bus (Number, Model, Mileage)");
-                    modelsMenu(new BusActions());
+                    modelsMenu(new BusFillActions());
                     break;
                 case "2":
                     System.out.println("\nВы выбрали класс User (Name, Password, Mail)");
-                    modelsMenu(new UserActions());
+                    modelsMenu(new UserFillActions());
                     break;
                 case "3":
                     System.out.println("\nВы выбрали класс Student (Group Number, Average Score, Grade Book Number)");
-                    modelsMenu(new StudentActions());
+                    modelsMenu(new StudentFillActions());
                     break;
                 case "0":
                     System.out.println("\nВыход из программы.");
                     break;
                 default:
-                    System.out.print("\nКоманда не распознана, повторите ввод (0 - для выхода).\n");
+                    System.err.print("\nКоманда не распознана, повторите ввод (0 - для выхода).\n");
             }
         }
         while (!inputMenu.equals("0"));
     }
 
-    private static <T> void modelsMenu(Actions<T> actions) {
+    private static <T> void modelsMenu(FillActions<T> fillActions) {
         String inputClass;
         List<T> models;
         do {
-            System.out.println("\nВыберите способ заполнения массива " + actions.getModelName() + ": " +
+            System.out.println("\nВыберите способ заполнения массива " + fillActions.getModelName() + ": " +
                     "\n1) Из файла" +
                     "\n2) Рандом" +
                     "\n3) Вручную" +
                     "\n0) Вернуться в главное меню");
             System.out.print("================\nВведите команду: ");
             inputClass = scanner.nextLine();
+            SortSearchActions<T> sortSearchActions = (SortSearchActions<T>) getSortSearchActions(fillActions.getModelName());
 
             switch (inputClass) {
                 case "1":
                     System.out.println("\nВы выбрали 1 - \"Из файла\"\n");
-                    models = actions.fillByFile();
-
-                    //TODO remove inside next menu
-                    if (models == null) {
-                        // go to next menu
-                    }
+                    models = fillActions.fillByFile();
+                    sortSearchMenu(sortSearchActions, models);
                     break;
                 case "2":
                     System.out.println("\nВы выбрали 2 - \"Рандом\"\n");
-                    models = actions.fillRandom();
+                    models = fillActions.fillRandom();
+                    sortSearchMenu(sortSearchActions, models);
                     break;
                 case "3":
                     System.out.println("\nВы выбрали 3 - \"Вручную\"\n");
-                    models = actions.fillManual();
+                    models = fillActions.fillManual();
+                    sortSearchMenu(sortSearchActions, models);
                     break;
                 case "0":
                     System.out.println("\nВозврат в предыдущее меню.");
                     break;
                 default:
-                    System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+                    System.err.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
         } while (!inputClass.equals("0"));
+    }
+
+    private static <T> void sortSearchMenu(SortSearchActions<T> actions, List<T> models) {
+        String actionMenu = """
+                
+                Массив %s (содержит %d записей)
+                Выберите действие:
+                1) Вывести массив в консоль
+                2) Отсортировать массив быстрой сортировкой (поле по умолчанию)
+                3) Отсортировать массив быстрой сортировкой по определенному полю
+                4) Отсортировать массив альтернативной быстрой сортировкой по определенному полю
+                5) Найти элемент (бинарный поиск)
+                0) Вернуться в предыдущее меню""";
+
+        if (models == null) return;
+
+        Scanner actionScan = new Scanner(System.in);
+        String inputAction;
+
+        do {
+            System.out.printf(actionMenu, actions.getModelName(), models.size());
+            System.out.print("\n================\nВведите команду: ");
+            inputAction = actionScan.nextLine();
+
+            switch (inputAction) {
+                case "1":
+                    System.out.printf("\nЭлементы в массиве %s:\n", actions.getModelName());
+                    models.forEach(System.out::println);
+                    break;
+                case "2":
+                    actions.sortAction(SortType.DEFAULT, models);
+                    break;
+                case "3":
+                    actions.sortAction(SortType.BY_FIELD, models);
+                    break;
+                case "4":
+                    actions.sortAction(SortType.ADDITIONAL, models);
+                    break;
+                case "5":
+                    T model = actions.binarySearch(models);
+                    if (model != null) System.out.println(model);
+                    break;
+                case "0":
+                    System.out.print("\nВозврат в предыдущее меню.\n");
+                    break;
+                default:
+                    System.err.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+            }
+        } while (!inputAction.equals("0"));
+    }
+
+    private static SortSearchActions<?> getSortSearchActions(String modelName) {
+        return switch (modelName) {
+            case "Bus" -> new BusSortSearchActions();
+            case "User" -> new UserSortSearchActions();
+            case "Student" -> new StudentSortSearchActions();
+            default -> null;
+        };
     }
 }

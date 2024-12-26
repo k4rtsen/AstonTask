@@ -41,8 +41,8 @@ public class MainSort {
         buses.forEach(System.out::println);
 
         System.out.println("Бин поиск автобуса Model C по модели");
-        Bus lookingBus = busBuilder.setModel("Model C").setNumber(3).setMileage(1).build();
-        Bus.setComp(new BusComparator.ByNumber());
+        Bus lookingBus = busBuilder.setModel("Model C").setNumber(5).setMileage(3).build();
+//        Bus.setComp(new BusComparator.ByNumber());
         int index = BinarySearch.search(buses, lookingBus);
         String busResult = index == -1 ? "Такого автобуса нет в массиве" : "Автобус найден: " + buses.get(index);
         System.out.println(busResult);

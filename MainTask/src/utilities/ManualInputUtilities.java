@@ -1,6 +1,6 @@
-package filling;
+package utilities;
 
-import actions.Actions;
+import actions.FillActions;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Класс для считывания int, string, double ручным способом
  */
-public class ByManual {
+public class ManualInputUtilities {
     private static final Scanner manualScan = new Scanner(System.in);
 
     public static int readInt(String inputLine) {
@@ -23,7 +23,8 @@ public class ByManual {
                 else if (number == 0) System.out.println("\nВозврат в предыдущее меню");
                 break;
             } catch (InputMismatchException ex) {
-                System.err.println("НЕ корректное число, повторите ввод\n");
+                manualScan.nextLine(); // чтобы очистить ввод
+                System.out.println("НЕ корректное число, повторите ввод\n");
             }
         } while(true);
         return number;
@@ -39,7 +40,7 @@ public class ByManual {
                 else if (line.equals("0")) System.out.println("\nВозврат в предыдущее меню");
                 break;
             } catch (InputMismatchException ex) {
-                System.err.println("Введенная строка пустая, повторите ввод\n");
+                System.out.println("Введенная строка пустая, повторите ввод\n");
             }
         } while(true);
         return line;
@@ -55,13 +56,14 @@ public class ByManual {
                 else if (number == 0) System.out.println("\nВозврат в предыдущее меню");
                 break;
             } catch (InputMismatchException ex) {
-                System.err.println("НЕ корректное число, повторите ввод\n");
+                manualScan.nextLine(); // чтобы очистить ввод
+                System.out.println("НЕ корректное число, повторите ввод\n");
             }
         } while(true);
         return number;
     }
 
-    public static <T> List<T> fillManual(String modelName, Actions.ManualReader<T> reader) {
+    public static <T> List<T> fillManual(String modelName, FillActions.ManualReader<T> reader) {
         int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", modelName));
         if (arraySize == 0) return null;
 

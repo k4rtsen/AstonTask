@@ -2,7 +2,7 @@ package actions;
 
 import java.util.List;
 
-public interface Actions<T> {
+public interface FillActions<T> {
     String getModelName();
 
     List<T> fillByFile();

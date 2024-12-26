@@ -23,7 +23,7 @@ public class BinarySearch {
     private static <T extends Filterable<T>> int search(List<T> list, T target, int low, int high) {
         int middle = low  + ((high - low) / 2);
 
-        if (high < low) {
+        if (middle < 0 || middle >= list.size() || high < low) {
             return -1;
         }
 
