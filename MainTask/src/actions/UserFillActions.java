@@ -27,7 +27,7 @@ public class UserFillActions implements FillActions<User> {
     */
     @Override
     public List<User> fillByFile() {
-        String fileName = "MainTask/input_User.txt";
+        String fileName = "input_User.txt";
         return readFile(fileName, (data, i) -> userBuilder
                 .setId(i)
                 .setName(data[0])

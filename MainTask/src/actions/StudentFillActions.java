@@ -25,7 +25,7 @@ public class StudentFillActions implements FillActions<Student> {
      */
     @Override
     public List<Student> fillByFile() {
-        String fileName = "MainTask/input_Student.txt";
+        String fileName = "input_Student.txt";
         return readFile(fileName, (data, _) -> studentBuilder
                 .setGroup(data[0])
                 .setScore(Double.parseDouble(data[1]))

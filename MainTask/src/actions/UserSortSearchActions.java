@@ -92,22 +92,22 @@ public class UserSortSearchActions implements SortSearchActions<User> {
         User.UserBuilder userBuilder = new User.UserBuilder();
 
         if (comp instanceof UserComparator.ById) {
-            int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню)");
+            int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
             if (id == 0) return null;
             lookingUser = userBuilder.setId(id).setName(DEFAULT_USER_NAME)
                     .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
         } else if (comp instanceof UserComparator.ByName) {
-            String userName = readString("Введите имя пользователя");
+            String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
             if (userName.equals("0")) return null;
             lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(userName)
                     .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
         } else if (comp instanceof UserComparator.ByPassword) {
-            String password = readString("Введите пароль пользователя");
+            String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
             if (password.equals("0")) return null;
             lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
                     .setPassword(password).setEmail(DEFAULT_USER_EMAIL).build();
         } else {
-            String email = readString("Введите e-mail пользователя");
+            String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
             if (email.equals("0")) return null;
             lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
                     .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
