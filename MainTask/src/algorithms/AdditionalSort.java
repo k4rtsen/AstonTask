@@ -3,9 +3,10 @@ package algorithms;
 import comparators.*;
 import models.*;
 import java.util.*;
+import models.Filterable;
 
 public class AdditionalSort {
-    public static <T> void sort(List<T> array) {
+    public static <T extends Filterable<T>> void sort(List<T> array) {
         List<Integer> evenIndices = new ArrayList<>();
         List<T> evenObjects = new ArrayList<>();
 
@@ -24,7 +25,7 @@ public class AdditionalSort {
         }
     }
 
-    private static <T> void sort(List<T> array, int lowIndex, int highIndex) {
+    private static <T extends Filterable<T>> void sort(List<T> array, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
             int pivot = getMedianPivot(array, lowIndex, highIndex);
 
@@ -34,15 +35,14 @@ public class AdditionalSort {
             int leftPointer = lowIndex;
             int rightPointer = highIndex;
 
-            Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
-
             while (leftPointer < rightPointer) {
 
-                while (comparator.compare(array.get(leftPointer), array.get(pivot)) < 0 && leftPointer < rightPointer) {
+                while (array.get(leftPointer).compTo(array.get(pivot)) < 0 && leftPointer < rightPointer) {
                     leftPointer++;
                 }
 
-                while (comparator.compare(array.get(rightPointer), array.get(pivot)) > 0 && leftPointer < rightPointer) {
+
+                while (array.get(rightPointer).compTo(array.get(pivot)) > 0 && leftPointer < rightPointer) {
                     rightPointer--;
                 }
 
