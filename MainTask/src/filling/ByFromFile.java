@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static utilities.Validate.*;
+
 /**
  * Класс для заполнения классов Bus, User, Student из файлов
  */
@@ -28,18 +30,13 @@ public class ByFromFile {
             try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
                 int lineCount = 1;
                 String line;
-                Bus.BusBuilder busBuilder = new Bus.BusBuilder();
+                Bus bus;
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    String[] tmpArr = line.split(";");
                     lineCount++;
-
-                    if (tmpArr.length == 3) {
-                        buses.add(busBuilder
-                                .setNumber(Integer.parseInt(tmpArr[0]))
-                                .setModel(tmpArr[1])
-                                .setMileage(Integer.parseInt(tmpArr[2]))
-                                .build());
+                    bus = BusLineValidate(line);
+                    if (bus != null) {
+                        buses.add(bus);
                     } else {
                         System.out.printf("Строка %s (под номером %s в файле) не корректна, она будет пропущена.\n",
                                 line, lineCount);
@@ -72,19 +69,14 @@ public class ByFromFile {
                 int count = 1;
                 int lineCount = 1;
                 String line;
-                User.UserBuilder userBuilder = new User.UserBuilder();
+                User user;
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    String[] tmpArr = line.split(";");
                     lineCount++;
 
-                    if (tmpArr.length == 3) {
-                        users.add(userBuilder
-                                .setId(count)
-                                .setName(tmpArr[0])
-                                .setPassword(tmpArr[1])
-                                .setEmail(tmpArr[2])
-                                .build());
+                    user = UserLineValidate(line, count);
+                    if (user != null) {
+                        users.add(user);
                         count++;
                     } else {
                         System.out.printf("Строка %s (под номером %s в файле) не корректна, она будет пропущена.\n",
@@ -116,18 +108,14 @@ public class ByFromFile {
             try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(file.getPath()))) {
                 int lineCount = 1;
                 String line;
-                Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
+                Student student;
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    String[] tmpArr = line.split(";");
                     lineCount++;
 
-                    if (tmpArr.length == 3) {
-                        students.add(studentBuilder
-                                .setGroup(tmpArr[0])
-                                .setScore(Double.parseDouble(tmpArr[1]))
-                                .setGradeBookNum(Integer.parseInt(tmpArr[2]))
-                                .build());
+                    student = StudentLineValidate(line);
+                    if (student != null) {
+                        students.add(student);
                     } else {
                         System.out.printf("Строка %s (под номером %s в файле) не корректна, она будет пропущена.\n",
                                 line, lineCount);

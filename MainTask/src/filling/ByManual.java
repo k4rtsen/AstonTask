@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static utilities.Validate.*;
+
 /**
  * Класс для заполнения классов Bus, User, Student ручным способом
  */
@@ -46,15 +48,41 @@ public class ByManual {
 
         for (int i = 0; i < Integer.parseInt(inputLength); i++) {
             do {
-                System.out.printf("Bus[%d] - Введите номер автобуса (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        Bus[%d] - Введите номер автобуса
+                        целое положительное число от 2 до 5 знаков
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                if (manualInput.matches("-?\\d+")) {
+                if (BusNumberValidate(manualInput)) {
                     number = Integer.parseInt(manualInput);
+                    manualInput = "true";
+                } else {
+                    System.out.println("Не корректные данные, попробуйте еще раз");
+                }
+
+
+            } while (!manualInput.equals("true"));
+
+            do {
+                System.out.printf("""
+                        
+                        Bus[%d] - Введите модель автобуса
+                        строка из латинских букв от 3 до 10 символов
+                        (0 - отмена):\s""", i);
+                manualInput = manualScan.nextLine();
+                if (manualInput.equals("0")) {
+                    System.out.println("\nВозврат в предыдущее меню");
+                    return null;
+                }
+
+                if (BusModelValidate(manualInput)) {
+                    model = manualInput;
                     manualInput = "true";
                 } else {
                     System.out.println("Не корректные данные, попробуйте еще раз");
@@ -62,26 +90,18 @@ public class ByManual {
             } while (!manualInput.equals("true"));
 
             do {
-                System.out.printf("Bus[%d] - Введите модель автобуса (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        Bus[%d] - Введите пробег автобуса
+                        целое положительное число от 2 до 8 знаков
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                model = manualInput;
-                manualInput = "true";
-            } while (!manualInput.equals("true"));
-
-            do {
-                System.out.printf("Bus[%d] - Введите пробег автобуса (0 - отмена): ", i);
-                manualInput = manualScan.nextLine();
-                if (manualInput.equals("0")) {
-                    System.out.println("\nВозврат в предыдущее меню");
-                    return null;
-                }
-
-                if (manualInput.matches("-?\\d+")) {
+                if (BusMileageValidate(manualInput)) {
                     mileage = Integer.parseInt(manualInput);
                     manualInput = "true";
                 } else {
@@ -138,39 +158,69 @@ public class ByManual {
 
         for (int i = 0; i < Integer.parseInt(inputLength); i++) {
             do {
-                System.out.printf("User[%d] - Введите имя пользователя (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        User[%d] - Введите имя пользователя
+                        строка состоящая из латинских букв от 2 до 10 символов
+                        (0 - отмена): \s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                name = manualInput;
-                manualInput = "true";
+                if (UserNameValidate(manualInput)) {
+                    name = manualInput;
+                    manualInput = "true";
+                } else {
+                    System.out.println("Не корректные данные, попробуйте еще раз.");
+                }
             } while (!manualInput.equals("true"));
 
             do {
-                System.out.printf("User[%d] - Введите пароль пользователя (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        User[%d] - Введите пароль пользователя
+                        длина 8 символов, обязательное наличие
+                        заглавной, прописной латинских букв, цифры, спец.символа !@$^&*
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                password = manualInput;
-                manualInput = "true";
+                if (UserPasswordValidate(manualInput)) {
+                    password = manualInput;
+                    manualInput = "true";
+                } else {
+                    System.out.println("Не корректные данные, попробуйте еще раз.");
+                }
             } while (!manualInput.equals("true"));
 
             do {
-                System.out.printf("User[%d] - Введите e-mail пользователя (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        User[%d] - Введите e-mail пользователя
+                        <имя_почты>@<домен_почты>.<верхний_домен> где:
+                        имя_почты - прописные латинские буквы и цифры от 2 до 20 символов
+                        домен_почты - прописные латинские буквы и цифры от 2 до 10 символов
+                        верхний_домен - латинские прописные буквы от 2 до 4 символов
+                        пример - example@maildomain.com
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                email = manualInput;
-                manualInput = "true";
+                if (UserEMailValidate(manualInput)) {
+                    email = manualInput;
+                    manualInput = "true";
+                } else {
+                    System.out.println("Не корректные данные, попробуйте еще раз.");
+                }
+
             } while (!manualInput.equals("true"));
 
             users.add(userBuilder
@@ -223,44 +273,62 @@ public class ByManual {
 
         for (int i = 0; i < Integer.parseInt(inputLength); i++) {
             do {
-                System.out.printf("Student[%d] - Введите группу студента (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        Student[%d] - Введите группу студента
+                        вида X-NNN, где
+                        X - любая заглавная латинская буква
+                        NNN - 3х значное число (001 допускается)
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                group = manualInput;
-                manualInput = "true";
+                if (StudentGroupValidate(manualInput)) {
+                    group = manualInput;
+                    manualInput = "true";
+                } else {
+                    System.out.println("Не корректные данные, попробуйте еще раз.");
+                }
+
             } while (!manualInput.equals("true"));
 
             do {
-                System.out.printf("Student[%d] - Введите средний балл студента (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        Student[%d] - Введите средний балл студента
+                        положительное число, целое или дробное (максимальный балл 10.0)
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                if (manualInput.matches("-?\\d+")) {
+                if (StudentAverageScoreValidate(manualInput)) {
                     averageScore = Double.parseDouble(manualInput);
                     manualInput = "true";
                 } else {
                     System.out.println("Не корректные данные, попробуйте еще раз");
                 }
 
-
             } while (!manualInput.equals("true"));
 
             do {
-                System.out.printf("Student[%d] - Введите номер зачетной книжки студента (0 - отмена): ", i);
+                System.out.printf("""
+                        
+                        Student[%d] - Введите номер зачетной книжки
+                        студента любое положительное число от 3 до 6 символов
+                        (0 - отмена):\s""", i);
                 manualInput = manualScan.nextLine();
                 if (manualInput.equals("0")) {
                     System.out.println("\nВозврат в предыдущее меню");
                     return null;
                 }
 
-                if (manualInput.matches("-?\\d+")) {
+                if (StudentGradeBookValidate(manualInput)) {
                     gradeBook = Integer.parseInt(manualInput);
                     manualInput = "true";
                 } else {

@@ -16,14 +16,10 @@ public class ActionQuickSort {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
                 
-                Выберите поля для сортировки:\
-                
-                1) По номеру (by number)\
-                
-                2) По модели (by model)\
-                
-                3) По пробегу (by mileage)\
-                
+                Выберите поля для сортировки:
+                1) По номеру (by number)
+                2) По модели (by model)
+                3) По пробегу (by mileage)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;
@@ -98,16 +94,11 @@ public class ActionQuickSort {
         Scanner actionScan = new Scanner(System.in);
         String sortField = """
                 
-                Выберите поля для сортировки:\
-                
-                1) По id (by id)\
-                
-                2) По имени (by name)\
-                
-                3) По паролю (by password)\
-                
-                4) По электронной почте (by email)\
-                
+                Выберите поля для сортировки:
+                1) По id (by id)
+                2) По имени (by name)
+                3) По паролю (by password)
+                4) По электронной почте (by email)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;
@@ -195,14 +186,10 @@ public class ActionQuickSort {
         Scanner actionScan = new Scanner(System.in);
         String sortField ="""
                 
-                Выберите поле для сортировки:\
-                
-                1) По группе (by group)\
-                
-                2) По среднему баллу (by average score)\
-                
-                3) По зачетной книжке (by grade book)\
-                
+                Выберите поле для сортировки:
+                1) По группе (by group)
+                2) По среднему баллу (by average score)
+                3) По зачетной книжке (by grade book)
                 0) Вернуться в предыдущее меню""";
         String inputAction;
         StringBuilder infoToFile;

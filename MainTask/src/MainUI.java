@@ -15,14 +15,10 @@ public class MainUI {
 
         String baseMenu = """
                 
-                Выберите один из классов:\
-                
-                1) Bus (Number, Model, Mileage)\
-                
-                2) User (Id,Name, Password, e-mail)\
-                
-                3) Student (Group Number, Average Score, Grade Book Number)\
-                
+                Выберите один из классов:
+                1) Bus (Number, Model, Mileage)
+                2) User (Id,Name, Password, e-mail)
+                3) Student (Group Number, Average Score, Grade Book Number)
                 0) Выход из приложения""";
 
         Scanner scanner = new Scanner(System.in);

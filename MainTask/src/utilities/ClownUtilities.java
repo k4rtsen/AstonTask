@@ -13,7 +13,7 @@ public final class ClownUtilities {
     static final int USER_PASSWORD_LENGTH = 8;
     static final String LETTERS_FOR_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static final String NUMBERS_FOR_PASSWORD = "1234567890";
-    static final String SPECIAL_FOR_PASSWORD = "!@$%^&*";
+    static final String SPECIAL_FOR_PASSWORD = "!@$^&*";
 
     private ClownUtilities() {
     }
