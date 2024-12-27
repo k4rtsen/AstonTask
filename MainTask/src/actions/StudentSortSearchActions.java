@@ -1,5 +1,6 @@
 package actions;
 
+import algorithms.AdditionalSort;
 import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.StudentComparator;
@@ -36,25 +37,31 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
     @Override
     public void defaultSort(List<Student> models) {
         Student.setComp(StudentComparator.FullComparison.getFullComparison());
-        sort(models, "\nМассив отсортирован по умолчанию (по группе).");
+        sort(models, "\nМассив отсортирован по умолчанию (по группе).", false);
+    }
+
+    @Override
+    public void additionalSort(List<Student> models) {
+        Student.setComp(new StudentComparator.ByGradeBook());
+        sort(models, "\nМассив отсортирован только по четным значениям зачетных книг (by grade book).", true);
     }
 
     @Override
     public void sortByFirstField(List<Student> models) {
         Student.setComp(new StudentComparator.ByGroup());
-        sort(models, "\nМассив отсортирован по группе (by group).");
+        sort(models, "\nМассив отсортирован по группе (by group).", false);
     }
 
     @Override
     public void sortBySecondField(List<Student> models) {
         Student.setComp(new StudentComparator.ByScore());
-        sort(models, "\nМассив отсортирован по среднему баллу (by average score).");
+        sort(models, "\nМассив отсортирован по среднему баллу (by average score).", false);
     }
 
     @Override
     public void sortByThirdField(List<Student> models) {
         Student.setComp(new StudentComparator.ByGradeBook());
-        sort(models, "\nМассив отсортирован по зачетной книжке (by grade book).");
+        sort(models, "\nМассив отсортирован по зачетной книжке (by grade book).", false);
     }
 
     @Override
@@ -63,9 +70,13 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
     }
 
     @Override
-    public void sort(List<Student> models, String msg) {
+    public void sort(List<Student> models, String msg, boolean isSkipOdd) {
         StringBuilder infoToFile = new StringBuilder();
-        QuickSort.sort(models);
+        if (!isSkipOdd)
+            QuickSort.sort(models);
+        else
+            AdditionalSort.sort(models);
+
         for (Student it : models) {
             infoToFile.append(it).append("\n");
         }

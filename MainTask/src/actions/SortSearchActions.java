@@ -1,5 +1,6 @@
 package actions;
 
+import algorithms.AdditionalSort;
 import comparators.BusComparator;
 import enums.SortType;
 import models.Bus;
@@ -28,8 +29,8 @@ public interface SortSearchActions<T> {
         }
 
         if (sortType == SortType.ADDITIONAL) {
-            Bus.setComp(new BusComparator.ByNumber());
             // TODO if additional sort
+            additionalSort(models);
             return;
         }
 
@@ -64,6 +65,8 @@ public interface SortSearchActions<T> {
 
     void defaultSort(List<T> models);
 
+    void additionalSort(List<T> models);
+
     void sortByFirstField(List<T> models);
 
     void sortBySecondField(List<T> models);
@@ -72,7 +75,7 @@ public interface SortSearchActions<T> {
 
     void sortByFourthField(List<T> models);
 
-    void sort(List<T> models, String msg);
+    void sort(List<T> models, String msg, boolean isSkipOdd);
 
     T binarySearch(List<T> models);
 }

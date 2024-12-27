@@ -1,5 +1,6 @@
 package actions;
 
+import algorithms.AdditionalSort;
 import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.UserComparator;
@@ -35,37 +36,46 @@ public class UserSortSearchActions implements SortSearchActions<User> {
     @Override
     public void defaultSort(List<User> models) {
         User.setComp(UserComparator.FullComparison.getFullComparison());
-        sort(models, "\nМассив отсортирован по умолчанию");
+        sort(models, "\nМассив отсортирован по умолчанию", false);
+    }
+
+    @Override
+    public void additionalSort(List<User> models) {
+        User.setComp(new UserComparator.ById());
+        sort(models, "\nМассив отсортирован только по четным значениям id (by id).", true);
     }
 
     @Override
     public void sortByFirstField(List<User> models) {
         User.setComp(new UserComparator.ById());
-        sort(models, "\nМассив отсортирован по id (by id).");
+        sort(models, "\nМассив отсортирован по id (by id).", false);
     }
 
     @Override
     public void sortBySecondField(List<User> models) {
         User.setComp(new UserComparator.ByName());
-        sort(models, "\nМассив отсортирован по имени (by name).");
+        sort(models, "\nМассив отсортирован по имени (by name).", false);
     }
 
     @Override
     public void sortByThirdField(List<User> models) {
         User.setComp(new UserComparator.ByPassword());
-        sort(models, "\nМассив отсортирован по паролю (by password).");
+        sort(models, "\nМассив отсортирован по паролю (by password).", false);
     }
 
     @Override
     public void sortByFourthField(List<User> models) {
         User.setComp(new UserComparator.ByEmail());
-        sort(models, "\nМассив отсортирован по электронной почте (by email).");
+        sort(models, "\nМассив отсортирован по электронной почте (by email).", false);
     }
 
     @Override
-    public void sort(List<User> models, String msg) {
+    public void sort(List<User> models, String msg, boolean isSkipOdd) {
         StringBuilder infoToFile = new StringBuilder();
-        QuickSort.sort(models);
+        if (!isSkipOdd)
+            QuickSort.sort(models);
+        else
+            AdditionalSort.sort(models);
         for (User it : models) {
             infoToFile.append(it).append("\n");
         }
