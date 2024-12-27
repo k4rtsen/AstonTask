@@ -107,15 +107,4 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
         fileWriting("Found " + student);
         return student;
     }
-
-    private void sortByGroup(List<Student> models, String infoLine) {
-        StringBuilder infoToFile = new StringBuilder();
-        Student.setComp(new StudentComparator.ByGroup());
-        QuickSort.sort(models);
-        for (Student it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println(infoLine);
-    }
 }
