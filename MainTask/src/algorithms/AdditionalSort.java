@@ -27,33 +27,27 @@ public class AdditionalSort {
 
     private static <T extends Filterable<T>> void sort(List<T> array, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
-            int pivot = getMedianPivot(array, lowIndex, highIndex);
-
-            swap(array, pivot, highIndex);
-            pivot = highIndex;
-
-            int leftPointer = lowIndex;
-            int rightPointer = highIndex;
-
-            while (leftPointer < rightPointer) {
-
-                while (array.get(leftPointer).compTo(array.get(pivot)) < 0 && leftPointer < rightPointer) {
-                    leftPointer++;
-                }
-
-
-                while (array.get(rightPointer).compTo(array.get(pivot)) > 0 && leftPointer < rightPointer) {
-                    rightPointer--;
-                }
-
-                swap(array, leftPointer, rightPointer);
-            }
-
-            swap(array, leftPointer, pivot);
-
-            sort(array, lowIndex, leftPointer - 1);
-            sort(array, leftPointer + 1, highIndex);
+            int partitionIndex = partition(array, lowIndex, highIndex);
+            sort(array, lowIndex, partitionIndex - 1);
+            sort(array, partitionIndex + 1, highIndex);
         }
+    }
+
+    private static <T extends Filterable<T>> int partition(List<T> array, int lowIndex, int highIndex) {
+        int pivotIndex = getMedianPivot(array, lowIndex, highIndex);
+        T pivot = array.get(pivotIndex);
+        swap(array, pivotIndex, highIndex);
+
+        int partitionIndex = lowIndex;
+        for (int i = lowIndex; i < highIndex; i++) {
+            if (array.get(i).compTo(pivot) < 0) {
+                swap(array, i, partitionIndex);
+                partitionIndex++;
+            }
+        }
+        swap(array, partitionIndex, highIndex);
+
+        return partitionIndex;
     }
 
     private static <T> void swap(List<T> array, int index1, int index2) {
@@ -62,31 +56,17 @@ public class AdditionalSort {
         array.set(index2, temp);
     }
 
-//    private static <T> boolean isEven(T object) {
-//        int value = getNumericFieldValue(object);
-//        return value % 2 == 0;
-//    }
-//
-//    private static <T> int getNumericFieldValue(T object) {
-//        if (object instanceof Bus)
-//            return ((Bus) object).getNumber();
-//        if (object instanceof Student)
-//            return ((Student) object).getGradeBookNumber();
-//        if (object instanceof User)
-//            return ((User) object).getId();
-//        throw new IllegalArgumentException("Объект этого класса не поддерживается");
-//    }
-
-    private static <T extends Filterable<T>> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
+    private static <T> int getMedianPivot(List<T> array, int lowIndex, int highIndex) {
         int middleIndex = (int)Math.floor((highIndex - lowIndex) / 2.0);
         T firstElement = array.get(lowIndex);
         T lastElement = array.get(highIndex);
         T middleElement = array.get(middleIndex);
-        Comparator<T> comparator = getComparatorByClassName(array.getFirst().getClass().getSimpleName());
-//        Comparator<T> comparator = array.getFirst().getComp();
+
         List<T> elements = Arrays.asList(firstElement, lastElement, middleElement);
-        elements.sort(comparator);
-        return array.indexOf(elements.get(1));
+        elements.sort(getComparatorByClassName(firstElement.getClass().getSimpleName()));
+
+        T medianElement = elements.get(1);
+        return array.indexOf(medianElement);
     }
 
     private static <T> Comparator<T> getComparatorByClassName(String className) {
@@ -94,7 +74,7 @@ public class AdditionalSort {
             case "Bus" -> (Comparator<T>) new BusComparator.ByNumber();
             case "Student" -> (Comparator<T>) new StudentComparator.ByGradeBook();
             case "User" -> (Comparator<T>) new UserComparator.ById();
-            default -> throw new IllegalArgumentException("Объект этого класса не поддерживается");
+            default -> throw new IllegalArgumentException("Объект этого класса не поддерживается:" + className);
         };
     }
 }
