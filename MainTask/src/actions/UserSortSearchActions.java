@@ -76,6 +76,7 @@ public class UserSortSearchActions implements SortSearchActions<User> {
             QuickSort.sort(models);
         else
             AdditionalSort.sort(models);
+      
         for (User it : models) {
             infoToFile.append(it).append("\n");
         }

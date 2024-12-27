@@ -29,7 +29,7 @@ public interface SortSearchActions<T> {
         }
 
         if (sortType == SortType.ADDITIONAL) {
-            // TODO if additional sort
+            Bus.setComp(new BusComparator.ByNumber());
             additionalSort(models);
             return;
         }

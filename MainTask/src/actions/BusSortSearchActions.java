@@ -78,7 +78,7 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
             QuickSort.sort(models);
         else
             AdditionalSort.sort(models);
-
+  
         for (Bus it : models) {
             infoToFile.append(it).append("\n");
         }
