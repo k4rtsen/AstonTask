@@ -43,7 +43,7 @@ public class ManualInputUtilities {
                 else if (!check.test(line)) throw new InputMismatchException();
                 break;
             } catch (InputMismatchException ex) {
-                System.out.println("Введенная строка пустая, повторите ввод\n");
+                System.out.println("Введенная строка некорректная, повторите ввод\n");
             }
         } while(true);
         return line;

@@ -5,6 +5,7 @@ import enums.SortType;
 
 public class MainUI {
     private static final Scanner scanner = new Scanner(System.in);
+    private static boolean isSortUsed = false;
 
     public static void main(String[] args) {
         String helloText = "Добро пожаловать в приложение демонстрации алгоритма \"Быстрой сортировки\"" +
@@ -116,14 +117,21 @@ public class MainUI {
                     break;
                 case "2":
                     actions.sortAction(SortType.DEFAULT, models);
+                    isSortUsed = true;
                     break;
                 case "3":
                     actions.sortAction(SortType.BY_FIELD, models);
+                    isSortUsed = true;
                     break;
                 case "4":
                     actions.sortAction(SortType.ADDITIONAL, models);
+                    isSortUsed = false;
                     break;
                 case "5":
+                    if (!isSortUsed) {
+                        System.out.println("\nСначала отсортируйте массив любой сортировкой, кроме дополнительной");
+                        break;
+                    }
                     T model = actions.binarySearch(models);
                     if (model != null) System.out.println(model);
                     break;
