@@ -23,11 +23,10 @@ public class ManualInputUtilities {
             System.out.print(inputLine);
             try {
                 number = manualScan.nextLine();
-                if (!check.test(number))  throw new InputMismatchException();
-                else if (number.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                if (number.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                else if (!check.test(number)) throw new InputMismatchException();
                 break;
             } catch (InputMismatchException ex) {
-                manualScan.nextLine(); // чтобы очистить ввод
                 System.out.println("НЕ корректное число, повторите ввод\n");
             }
         } while(true);
@@ -40,8 +39,8 @@ public class ManualInputUtilities {
             System.out.print(inputLine);
             try {
                 line = manualScan.nextLine();
-                if (!check.test(line)) throw new InputMismatchException();
-                else if (line.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                if (line.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                else if (!check.test(line)) throw new InputMismatchException();
                 break;
             } catch (InputMismatchException ex) {
                 System.out.println("Введенная строка пустая, повторите ввод\n");
@@ -56,11 +55,10 @@ public class ManualInputUtilities {
             System.out.print(inputLine);
             try {
                 number = manualScan.nextLine();
-                if (!check.test(number)) throw new InputMismatchException();
-                else if (number.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                if (number.equals("0")) System.out.println("\nВозврат в предыдущее меню");
+                else if (!check.test(number)) throw new InputMismatchException();
                 break;
             } catch (InputMismatchException ex) {
-                manualScan.nextLine(); // чтобы очистить ввод
                 System.out.println("НЕ корректное число, повторите ввод\n");
             }
         } while(true);
