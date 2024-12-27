@@ -34,55 +34,43 @@ public class UserSortSearchActions implements SortSearchActions<User> {
 
     @Override
     public void defaultSort(List<User> models) {
-        StringBuilder infoToFile = new StringBuilder();
-//        User.setComp(new UserComparator.FullComparison.getFullComparison());
-        QuickSort.sort(models);
-        for (User it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        sortById(models, "\nМассив отсортирован по умолчанию.");
+        User.setComp(UserComparator.FullComparison.getFullComparison());
+        sort(models, "\nМассив отсортирован по умолчанию");
     }
 
     @Override
     public void sortByFirstField(List<User> models) {
-        sortById(models,"\nМассив отсортирован по id (by id).");
+        User.setComp(new UserComparator.ById());
+        sort(models, "\nМассив отсортирован по id (by id).");
     }
 
     @Override
     public void sortBySecondField(List<User> models) {
-        StringBuilder infoToFile = new StringBuilder();
         User.setComp(new UserComparator.ByName());
-        QuickSort.sort(models);
-        for (User it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по имени (by name).");
+        sort(models, "\nМассив отсортирован по имени (by name).");
     }
 
     @Override
     public void sortByThirdField(List<User> models) {
-        StringBuilder infoToFile = new StringBuilder();
         User.setComp(new UserComparator.ByPassword());
-        QuickSort.sort(models);
-        for (User it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по паролю (by password).");
+        sort(models, "\nМассив отсортирован по паролю (by password).");
     }
 
     @Override
     public void sortByFourthField(List<User> models) {
-        StringBuilder infoToFile = new StringBuilder();
         User.setComp(new UserComparator.ByEmail());
+        sort(models, "\nМассив отсортирован по электронной почте (by email).");
+    }
+
+    @Override
+    public void sort(List<User> models, String msg) {
+        StringBuilder infoToFile = new StringBuilder();
         QuickSort.sort(models);
         for (User it : models) {
             infoToFile.append(it).append("\n");
         }
         fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по электронной почте (by email).");
+        System.out.println(msg);
     }
 
     @Override
@@ -122,16 +110,5 @@ public class UserSortSearchActions implements SortSearchActions<User> {
         User user = models.get(index);
         fileWriting("Found " + user);
         return user;
-    }
-
-    private void sortById(List<User> models, String infoLine) {
-        StringBuilder infoToFile = new StringBuilder();
-        User.setComp(new UserComparator.ById());
-        QuickSort.sort(models);
-        for (User it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println(infoLine);
     }
 }
