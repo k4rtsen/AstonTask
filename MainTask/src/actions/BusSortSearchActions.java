@@ -81,26 +81,31 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
         Bus lookingBus;
         Bus.BusBuilder busBuilder = new Bus.BusBuilder();
 
-        if (comp instanceof BusComparator.ByNumber) {
-            int number = readInt("Введите номер автобуса (0 - отмена): ");
-            if (number == 0) return null;
-            lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
-        } else if (comp instanceof BusComparator.ByModel) {
-            String model = readString("Введите модель автобуса (0 - отмена): ");
-            if (model.equals("0")) return null;
-            lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
-        } else if (comp instanceof BusComparator.ByMileage) {
-            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
-            if (mileage == 0) return null;
-            lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
-        } else {
-            int number = readInt("Введите номер автобуса (0 - отмена): ");
-            if (number == 0) return null;
-            String model = readString("Введите модель автобуса (0 - отмена): ");
-            if (model.equals("0")) return null;
-            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
-            if (mileage == 0) return null;
-            lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
+        switch (comp) {
+            case BusComparator.ByNumber byNumber -> {
+                int number = readInt("Введите номер автобуса (0 - отмена): ");
+                if (number == 0) return null;
+                lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
+            }
+            case BusComparator.ByModel byModel -> {
+                String model = readString("Введите модель автобуса (0 - отмена): ");
+                if (model.equals("0")) return null;
+                lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
+            }
+            case BusComparator.ByMileage byMileage -> {
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
+                if (mileage == 0) return null;
+                lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
+            }
+            case null, default -> {
+                int number = readInt("Введите номер автобуса (0 - отмена): ");
+                if (number == 0) return null;
+                String model = readString("Введите модель автобуса (0 - отмена): ");
+                if (model.equals("0")) return null;
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
+                if (mileage == 0) return null;
+                lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
+            }
         }
         int index = BinarySearch.search(models, lookingBus);
         if (index == -1) {

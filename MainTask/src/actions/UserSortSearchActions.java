@@ -79,26 +79,42 @@ public class UserSortSearchActions implements SortSearchActions<User> {
         User lookingUser;
         User.UserBuilder userBuilder = new User.UserBuilder();
 
-        if (comp instanceof UserComparator.ById) {
-            int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
-            if (id == 0) return null;
-            lookingUser = userBuilder.setId(id).setName(DEFAULT_USER_NAME)
-                    .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
-        } else if (comp instanceof UserComparator.ByName) {
-            String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
-            if (userName.equals("0")) return null;
-            lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(userName)
-                    .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
-        } else if (comp instanceof UserComparator.ByPassword) {
-            String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
-            if (password.equals("0")) return null;
-            lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
-                    .setPassword(password).setEmail(DEFAULT_USER_EMAIL).build();
-        } else {
-            String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
-            if (email.equals("0")) return null;
-            lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
-                    .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
+        switch (comp) {
+            case UserComparator.ById byId -> {
+                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
+                if (id == 0) return null;
+                lookingUser = userBuilder.setId(id).setName(DEFAULT_USER_NAME)
+                        .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
+            }
+            case UserComparator.ByName byName -> {
+                String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
+                if (userName.equals("0")) return null;
+                lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(userName)
+                        .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
+            }
+            case UserComparator.ByPassword byPassword -> {
+                String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
+                if (password.equals("0")) return null;
+                lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
+                        .setPassword(password).setEmail(DEFAULT_USER_EMAIL).build();
+            }
+            case UserComparator.ByEmail byEmail -> {
+                String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
+                if (email.equals("0")) return null;
+                lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
+                        .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
+            }
+            case null, default -> {
+                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
+                if (id == 0) return null;
+                String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
+                if (userName.equals("0")) return null;
+                String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
+                if (password.equals("0")) return null;
+                String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
+                if (email.equals("0")) return null;
+                lookingUser = userBuilder.setId(id).setName(userName).setPassword(password).setEmail(email).build();
+            }
         }
 
         int index = BinarySearch.search(models, lookingUser);
