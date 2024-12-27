@@ -13,8 +13,9 @@ public class QuickSort {
 
     /**
      * Быстрая сортировка
+     *
      * @param list список некоторых элементов
-     * @param <T> Filterable класс
+     * @param <T>  Filterable класс
      */
     public static <T extends Filterable<T>> void sort(List<T> list) {
         quickSort(list, 0, list.size());
@@ -47,11 +48,9 @@ public class QuickSort {
         // 1. Если меньше опорного
         // 2. Если равен опорному
         // 3. Если больше опорного
-        for (int i = left; i < right; i++)
-        {
+        for (int i = left; i < right; i++) {
             // 1.
-            if (list.get(i).compTo(pivot) < 0)
-            {
+            if (list.get(i).compTo(pivot) < 0) {
                 T temp = list.get(i);
                 list.set(i, list.get(great));
                 list.set(great, list.get(equal));
@@ -62,8 +61,7 @@ public class QuickSort {
             }
 
             // 2.
-            if (list.get(i).compTo(pivot) == 0)
-            {
+            if (list.get(i).compTo(pivot) == 0) {
                 T temp = list.get(i);
                 list.set(i, list.get(great));
                 list.set(great, temp);

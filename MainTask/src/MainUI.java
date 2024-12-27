@@ -87,7 +87,7 @@ public class MainUI {
         } while (!inputClass.equals("0"));
     }
 
-    private static <T> void sortSearchMenu(SortSearchActions<T> actions, List<T> models) {
+    private static <T, R extends SortSearchActions<T>> void sortSearchMenu(R actions, List<T> models) {
         String actionMenu = """
                 
                 Массив %s (содержит %d записей)
@@ -95,7 +95,7 @@ public class MainUI {
                 1) Вывести массив в консоль
                 2) Отсортировать массив быстрой сортировкой (поле по умолчанию)
                 3) Отсортировать массив быстрой сортировкой по определенному полю
-                4) Отсортировать массив альтернативной быстрой сортировкой по определенному полю
+                4) Отсортировать массив по четным полям
                 5) Найти элемент (бинарный поиск)
                 0) Вернуться в предыдущее меню""";
 

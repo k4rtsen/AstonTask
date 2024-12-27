@@ -35,41 +35,42 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
      */
     @Override
     public void defaultSort(List<Student> models) {
-        sortByGroup(models, "\nМассив отсортирован по умолчанию (по группе).");
+        Student.setComp(StudentComparator.FullComparison.getFullComparison());
+        sort(models, "\nМассив отсортирован по умолчанию (по группе).");
     }
 
     @Override
     public void sortByFirstField(List<Student> models) {
-        sortByGroup(models, "\nМассив отсортирован по группе (by group).");
+        Student.setComp(new StudentComparator.ByGroup());
+        sort(models, "\nМассив отсортирован по группе (by group).");
     }
 
     @Override
     public void sortBySecondField(List<Student> models) {
-        StringBuilder infoToFile = new StringBuilder();
         Student.setComp(new StudentComparator.ByScore());
-        QuickSort.sort(models);
-        for (Student it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по среднему баллу (by average score).");
+        sort(models, "\nМассив отсортирован по среднему баллу (by average score).");
     }
 
     @Override
     public void sortByThirdField(List<Student> models) {
-        StringBuilder infoToFile = new StringBuilder();
         Student.setComp(new StudentComparator.ByGradeBook());
-        QuickSort.sort(models);
-        for (Student it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по зачетной книжке (by grade book).");
+        sort(models, "\nМассив отсортирован по зачетной книжке (by grade book).");
     }
 
     @Override
     public void sortByFourthField(List<Student> models) {
         System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+    }
+
+    @Override
+    public void sort(List<Student> models, String msg) {
+        StringBuilder infoToFile = new StringBuilder();
+        QuickSort.sort(models);
+        for (Student it : models) {
+            infoToFile.append(it).append("\n");
+        }
+        fileWriting(infoToFile.toString());
+        System.out.println(msg);
     }
 
     @Override

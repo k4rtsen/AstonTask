@@ -21,7 +21,7 @@ public class FileUtilities {
      * @throws IOException io exception
      */
     public static void fileWriting(String info) {
-        String filePath = normalizePath("MainTask/output.txt");
+        String filePath = "output.txt";
 
         Path file = Paths.get(filePath);
         if (Files.exists(file)) {

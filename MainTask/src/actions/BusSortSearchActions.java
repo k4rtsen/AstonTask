@@ -37,41 +37,41 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
      */
     @Override
     public void defaultSort(List<Bus> models) {
-        sortByMileage(models, "\nМассив отсортирован по умолчанию (по пробегу).");
+        Bus.setComp(BusComparator.FullComparison.getFullComparison());
+        sort(models, "\nМассив отсортирован по умолчанию");
     }
 
     @Override
     public void sortByFirstField(List<Bus> models) {
-        StringBuilder infoToFile =  new StringBuilder();
         Bus.setComp(new BusComparator.ByNumber());
-        QuickSort.sort(models);
-        for (Bus it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по номеру (by number).");
+        sort(models, "\nМассив отсортирован по номеру (by number).");
     }
 
     @Override
     public void sortBySecondField(List<Bus> models) {
-        StringBuilder infoToFile =  new StringBuilder();
         Bus.setComp(new BusComparator.ByModel());
-        QuickSort.sort(models);
-        for (Bus it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println("\nМассив отсортирован по модели (by model).");
+        sort(models, "\nМассив отсортирован по модели (by model).");
     }
 
     @Override
     public void sortByThirdField(List<Bus> models) {
-        sortByMileage(models, "\nМассив отсортирован по пробегу (by mileage).");
+        sort(models, "\nМассив отсортирован по пробегу (by mileage).");
     }
 
     @Override
     public void sortByFourthField(List<Bus> models) {
         System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+    }
+
+    @Override
+    public void sort(List<Bus> models, String msg) {
+        StringBuilder infoToFile = new StringBuilder();
+        QuickSort.sort(models);
+        for (Bus it : models) {
+            infoToFile.append(it).append("\n");
+        }
+        fileWriting(infoToFile.toString());
+        System.out.println(msg);
     }
 
     @Override
@@ -110,17 +110,5 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
         Bus bus = models.get(index);
         fileWriting("Found " + bus);
         return bus;
-    }
-
-    private void sortByMileage(List<Bus> models, String infoLine) {
-        StringBuilder infoToFile = new StringBuilder();
-        Bus.setComp(new BusComparator.ByMileage());
-        QuickSort.sort(models);
-        for (Bus it : models) {
-            infoToFile.append(it).append("\n");
-        }
-
-        fileWriting(infoToFile.toString());
-        System.out.println(infoLine);
     }
 }
