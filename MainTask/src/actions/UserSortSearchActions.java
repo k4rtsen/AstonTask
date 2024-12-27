@@ -5,6 +5,7 @@ import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.UserComparator;
 import models.User;
+import utilities.Validate;
 
 import java.util.Comparator;
 import java.util.List;
@@ -76,7 +77,7 @@ public class UserSortSearchActions implements SortSearchActions<User> {
             QuickSort.sort(models);
         else
             AdditionalSort.sort(models);
-      
+
         for (User it : models) {
             infoToFile.append(it).append("\n");
         }
@@ -91,38 +92,43 @@ public class UserSortSearchActions implements SortSearchActions<User> {
         User.UserBuilder userBuilder = new User.UserBuilder();
 
         switch (comp) {
-            case UserComparator.ById byId -> {
-                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
+            case UserComparator.ById _ -> {
+                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню)",
+                        Validate::isPositiveInteger);
                 if (id == 0) return null;
                 lookingUser = userBuilder.setId(id).setName(DEFAULT_USER_NAME)
                         .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
             }
-            case UserComparator.ByName byName -> {
-                String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
+            case UserComparator.ByName _ -> {
+                String userName = readString("Введите имя пользователя", Validate::userNameValidate);
                 if (userName.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(userName)
                         .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
             }
-            case UserComparator.ByPassword byPassword -> {
-                String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
+            case UserComparator.ByPassword _ -> {
+                String password = readString("Введите пароль пользователя", Validate::userPasswordValidate);
                 if (password.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
                         .setPassword(password).setEmail(DEFAULT_USER_EMAIL).build();
             }
-            case UserComparator.ByEmail byEmail -> {
-                String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
+            case UserComparator.ByEmail _ -> {
+                String email = readString("Введите e-mail пользователя", Validate::userEMailValidate);
                 if (email.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
-                        .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
+                    .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
             }
             case null, default -> {
-                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ");
+                int id = readInt("Введите id пользователя (0 - возврат в предыдущее меню): ",
+                        Validate::isPositiveInteger);
                 if (id == 0) return null;
-                String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ");
+                String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ",
+                        Validate::userNameValidate);
                 if (userName.equals("0")) return null;
-                String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ");
+                String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ",
+                        Validate::userPasswordValidate);
                 if (password.equals("0")) return null;
-                String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ");
+                String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ",
+                        Validate::userEMailValidate);
                 if (email.equals("0")) return null;
                 lookingUser = userBuilder.setId(id).setName(userName).setPassword(password).setEmail(email).build();
             }

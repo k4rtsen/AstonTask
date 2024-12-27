@@ -2,6 +2,7 @@ package actions;
 
 import utilities.ManualInputUtilities;
 import models.Bus;
+import utilities.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import static utilities.ManualInputUtilities.readString;
 import static utilities.FileUtilities.readFile;
 import static utilities.RandomUtilities.getRandomFromEnum;
 import static utilities.RandomUtilities.getRandomNumber;
+import static utilities.Validate.*;
 
 public class BusFillActions implements FillActions<Bus> {
     private static final Bus.BusBuilder busBuilder = new Bus.BusBuilder();
@@ -32,7 +34,8 @@ public class BusFillActions implements FillActions<Bus> {
                 .setNumber(Integer.parseInt(data[0]))
                 .setModel(data[1])
                 .setMileage(Integer.parseInt(data[2]))
-                .build()
+                .build(),
+                (data) -> busNumberValidate(data[0]) && busMileageValidate(data[2])
         );
     }
 
@@ -43,13 +46,16 @@ public class BusFillActions implements FillActions<Bus> {
     @Override
     public List<Bus> fillManual() {
         return ManualInputUtilities.fillManual(getModelName(), (i) -> {
-            int number = readInt(String.format("%s[%d] - Введите номер автобуса (0 - отмена): ", getModelName(), i));
+            int number = readInt(String.format("%s[%d] - Введите номер автобуса (0 - отмена): ", getModelName(), i),
+                    Validate::busNumberValidate);
             if (number == 0) return null;
 
-            String model = readString(String.format("%s[%d] - Введите модель автобуса (0 - отмена): ", getModelName(), i));
+            String model = readString(String.format("%s[%d] - Введите модель автобуса (0 - отмена): ", getModelName(), i),
+                    Validate::busModelValidate);
             if (model.equals("0")) return null;
 
-            int mileage = readInt(String.format("%s[%d] - Введите пробег автобуса (0 - отмена): ", getModelName(), i));
+            int mileage = readInt(String.format("%s[%d] - Введите пробег автобуса (0 - отмена): ", getModelName(), i),
+                    Validate::busMileageValidate);
             if (mileage == 0) return null;
 
             return busBuilder.setNumber(number)
@@ -65,7 +71,8 @@ public class BusFillActions implements FillActions<Bus> {
      */
     @Override
     public List<Bus> fillRandom() {
-        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()));
+        int arraySize = readInt(String.format("Введите размер массива %s (0 - возврат назад): ", getModelName()),
+                Validate::isPositiveInteger);
         if (arraySize == 0) return null;
 
         List<Bus> models = new ArrayList<>(arraySize);
