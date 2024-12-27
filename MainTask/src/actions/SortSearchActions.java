@@ -48,8 +48,8 @@ public interface SortSearchActions<T> {
                     sortByThirdField(models);
                     return;
                 case "4":
-                    sortByFourthField(models);
-                    return;
+                    if (sortByFourthField(models)) return;
+                    break;
                 case "0":
                     System.out.print("\nВозврат в предыдущее меню.\n");
                     return;
@@ -69,7 +69,7 @@ public interface SortSearchActions<T> {
 
     void sortByThirdField(List<T> models);
 
-    void sortByFourthField(List<T> models);
+    boolean sortByFourthField(List<T> models);
 
     void sort(List<T> models, String msg, boolean isSkipOdd);
 

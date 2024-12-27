@@ -36,7 +36,7 @@ public class FileUtilities {
             System.out.printf("Файл %s НЕ найден, создан новый.\n", file.getFileName());
         }
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file, StandardOpenOption.APPEND)) {
             bufferedWriter.write(info + "\n");
         }
         catch (IOException e) {
@@ -48,7 +48,7 @@ public class FileUtilities {
         Path file = Paths.get(normalizePath(fileName));
 
         if (!Files.exists(file)) {
-            System.err.printf("Файл %s не найден, проверьте правильность пути\n", fileName);
+            System.out.printf("Файл %s не найден, проверьте правильность пути\n", fileName);
             return null;
         }
         List<T> models = new ArrayList<>();
@@ -74,7 +74,7 @@ public class FileUtilities {
         }
 
         if (models.isEmpty()) {
-            System.err.println("\nФайл пустой или отсутствует, возврат в предыдущее меню.");
+            System.out.println("\nФайл пустой или отсутствует, возврат в предыдущее меню.");
             return null;
         }
 
