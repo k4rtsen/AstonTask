@@ -36,7 +36,7 @@ public class FileUtilities {
             System.out.printf("Файл %s НЕ найден, создан новый.\n", file.getFileName());
         }
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file, StandardOpenOption.APPEND)) {
             bufferedWriter.write(info + "\n");
         }
         catch (IOException e) {
