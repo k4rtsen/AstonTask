@@ -1,5 +1,6 @@
 package actions;
 
+import algorithms.AdditionalSort;
 import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.BusComparator;
@@ -38,24 +39,31 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
     @Override
     public void defaultSort(List<Bus> models) {
         Bus.setComp(BusComparator.FullComparison.getFullComparison());
-        sort(models, "\nМассив отсортирован по умолчанию");
+        sort(models, "\nМассив отсортирован по умолчанию", false);
+    }
+
+    @Override
+    public void additionalSort(List<Bus> models) {
+        Bus.setComp(new BusComparator.ByNumber());
+        sort(models, "\nМассив отсортирован только по четным значениям номеров (by number).", true);
     }
 
     @Override
     public void sortByFirstField(List<Bus> models) {
         Bus.setComp(new BusComparator.ByNumber());
-        sort(models, "\nМассив отсортирован по номеру (by number).");
+        sort(models, "\nМассив отсортирован по номеру (by number).", false);
     }
 
     @Override
     public void sortBySecondField(List<Bus> models) {
         Bus.setComp(new BusComparator.ByModel());
-        sort(models, "\nМассив отсортирован по модели (by model).");
+        sort(models, "\nМассив отсортирован по модели (by model).", false);
     }
 
     @Override
     public void sortByThirdField(List<Bus> models) {
-        sort(models, "\nМассив отсортирован по пробегу (by mileage).");
+        Bus.setComp(new BusComparator.ByMileage());
+        sort(models, "\nМассив отсортирован по пробегу (by mileage).", false);
     }
 
     @Override
@@ -64,9 +72,13 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
     }
 
     @Override
-    public void sort(List<Bus> models, String msg) {
+    public void sort(List<Bus> models, String msg, boolean isSkipOdd) {
         StringBuilder infoToFile = new StringBuilder();
-        QuickSort.sort(models);
+        if (!isSkipOdd)
+            QuickSort.sort(models);
+        else
+            AdditionalSort.sort(models);
+  
         for (Bus it : models) {
             infoToFile.append(it).append("\n");
         }
@@ -80,26 +92,31 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
         Bus lookingBus;
         Bus.BusBuilder busBuilder = new Bus.BusBuilder();
 
-        if (comp instanceof BusComparator.ByNumber) {
-            int number = readInt("Введите номер автобуса (0 - отмена): ");
-            if (number == 0) return null;
-            lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
-        } else if (comp instanceof BusComparator.ByModel) {
-            String model = readString("Введите модель автобуса (0 - отмена): ");
-            if (model.equals("0")) return null;
-            lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
-        } else if (comp instanceof BusComparator.ByMileage) {
-            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
-            if (mileage == 0) return null;
-            lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
-        } else {
-            int number = readInt("Введите номер автобуса (0 - отмена): ");
-            if (number == 0) return null;
-            String model = readString("Введите модель автобуса (0 - отмена): ");
-            if (model.equals("0")) return null;
-            int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
-            if (mileage == 0) return null;
-            lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
+        switch (comp) {
+            case BusComparator.ByNumber byNumber -> {
+                int number = readInt("Введите номер автобуса (0 - отмена): ");
+                if (number == 0) return null;
+                lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
+            }
+            case BusComparator.ByModel byModel -> {
+                String model = readString("Введите модель автобуса (0 - отмена): ");
+                if (model.equals("0")) return null;
+                lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
+            }
+            case BusComparator.ByMileage byMileage -> {
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
+                if (mileage == 0) return null;
+                lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
+            }
+            case null, default -> {
+                int number = readInt("Введите номер автобуса (0 - отмена): ");
+                if (number == 0) return null;
+                String model = readString("Введите модель автобуса (0 - отмена): ");
+                if (model.equals("0")) return null;
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ");
+                if (mileage == 0) return null;
+                lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
+            }
         }
         int index = BinarySearch.search(models, lookingBus);
         if (index == -1) {

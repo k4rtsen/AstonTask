@@ -1,5 +1,6 @@
 package actions;
 
+import algorithms.AdditionalSort;
 import algorithms.BinarySearch;
 import algorithms.QuickSort;
 import comparators.StudentComparator;
@@ -36,25 +37,31 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
     @Override
     public void defaultSort(List<Student> models) {
         Student.setComp(StudentComparator.FullComparison.getFullComparison());
-        sort(models, "\nМассив отсортирован по умолчанию (по группе).");
+        sort(models, "\nМассив отсортирован по умолчанию (по группе).", false);
+    }
+
+    @Override
+    public void additionalSort(List<Student> models) {
+        Student.setComp(new StudentComparator.ByGradeBook());
+        sort(models, "\nМассив отсортирован только по четным значениям зачетных книг (by grade book).", true);
     }
 
     @Override
     public void sortByFirstField(List<Student> models) {
         Student.setComp(new StudentComparator.ByGroup());
-        sort(models, "\nМассив отсортирован по группе (by group).");
+        sort(models, "\nМассив отсортирован по группе (by group).", false);
     }
 
     @Override
     public void sortBySecondField(List<Student> models) {
         Student.setComp(new StudentComparator.ByScore());
-        sort(models, "\nМассив отсортирован по среднему баллу (by average score).");
+        sort(models, "\nМассив отсортирован по среднему баллу (by average score).", false);
     }
 
     @Override
     public void sortByThirdField(List<Student> models) {
         Student.setComp(new StudentComparator.ByGradeBook());
-        sort(models, "\nМассив отсортирован по зачетной книжке (by grade book).");
+        sort(models, "\nМассив отсортирован по зачетной книжке (by grade book).", false);
     }
 
     @Override
@@ -63,9 +70,13 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
     }
 
     @Override
-    public void sort(List<Student> models, String msg) {
+    public void sort(List<Student> models, String msg, boolean isSkipOdd) {
         StringBuilder infoToFile = new StringBuilder();
-        QuickSort.sort(models);
+        if (!isSkipOdd)
+            QuickSort.sort(models);
+        else
+            AdditionalSort.sort(models);
+
         for (Student it : models) {
             infoToFile.append(it).append("\n");
         }
@@ -79,24 +90,38 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
         Student lookingStudent;
         Student.StudentBuilder studentBuilder = new Student.StudentBuilder();
 
-        if (comp instanceof StudentComparator.ByGroup) {
-            String group = readString("Введите группу студента (0 - отмена): ");
-            if (group.equals("0")) return null;
-            lookingStudent = studentBuilder.setGroup(group).setScore(DEFAULT_STUDENT_SCORE)
-                    .setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM).build();
-        } else if (comp instanceof StudentComparator.ByScore) {
-            double score = readDouble("Введите средний балл студента (0 - отмена): ");
-            if (score == 0) return null;
-            lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
-                    .setScore(score).setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM)
-                    .build();
-        } else {
-            int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
-            if (gradeBookNum == 0) return null;
-            lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
-                    .setScore(DEFAULT_STUDENT_SCORE).setGradeBookNum(gradeBookNum)
-                    .build();
+        switch (comp) {
+            case StudentComparator.ByGroup byGroup -> {
+                String group = readString("Введите группу студента (0 - отмена): ");
+                if (group.equals("0")) return null;
+                lookingStudent = studentBuilder.setGroup(group).setScore(DEFAULT_STUDENT_SCORE)
+                        .setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM).build();
+            }
+            case StudentComparator.ByScore byScore -> {
+                double score = readDouble("Введите средний балл студента (0 - отмена): ");
+                if (score == 0) return null;
+                lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
+                        .setScore(score).setGradeBookNum(DEFAULT_STUDENT_GRADE_BOOK_NUM)
+                        .build();
+            }
+            case StudentComparator.ByGradeBook byGradeBook -> {
+                int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
+                if (gradeBookNum == 0) return null;
+                lookingStudent = studentBuilder.setGroup(DEFAULT_STUDENT_GROUP)
+                        .setScore(DEFAULT_STUDENT_SCORE).setGradeBookNum(gradeBookNum)
+                        .build();
+            }
+            case null, default -> {
+                String group = readString("Введите группу студента (0 - отмена): ");
+                if (group.equals("0")) return null;
+                double score = readDouble("Введите средний балл студента (0 - отмена): ");
+                if (score == 0) return null;
+                int gradeBookNum = readInt("Введите номер зачетной книжки студента (0 - отмена): ");
+                if (gradeBookNum == 0) return null;
+                lookingStudent = studentBuilder.setGroup(group).setScore(score).setGradeBookNum(gradeBookNum).build();
+            }
         }
+
         int index = BinarySearch.search(models, lookingStudent);
         if (index == -1) {
             System.out.println("Искомый студент не найден в массиве.");
@@ -106,16 +131,5 @@ public class StudentSortSearchActions implements SortSearchActions<Student> {
         Student student = models.get(index);
         fileWriting("Found " + student);
         return student;
-    }
-
-    private void sortByGroup(List<Student> models, String infoLine) {
-        StringBuilder infoToFile = new StringBuilder();
-        Student.setComp(new StudentComparator.ByGroup());
-        QuickSort.sort(models);
-        for (Student it : models) {
-            infoToFile.append(it).append("\n");
-        }
-        fileWriting(infoToFile.toString());
-        System.out.println(infoLine);
     }
 }
