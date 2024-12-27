@@ -125,9 +125,9 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
             System.out.println("Искомый автобус не найден в массиве.");
             return null;
         }
-        System.out.print("Автобус найден: ");
         Bus bus = models.get(index);
         fileWriting("Found " + bus);
+        System.out.print("Автобус найден: ");
         return bus;
     }
 }

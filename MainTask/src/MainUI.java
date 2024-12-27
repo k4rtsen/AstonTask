@@ -44,7 +44,7 @@ public class MainUI {
                     System.out.println("\nВыход из программы.");
                     break;
                 default:
-                    System.err.print("\nКоманда не распознана, повторите ввод (0 - для выхода).\n");
+                    System.out.print("\nКоманда не распознана, повторите ввод (0 - для выхода).\n");
             }
         }
         while (!inputMenu.equals("0"));
@@ -83,7 +83,7 @@ public class MainUI {
                     System.out.println("\nВозврат в предыдущее меню.");
                     break;
                 default:
-                    System.err.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+                    System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
         } while (!inputClass.equals("0"));
     }
@@ -139,7 +139,7 @@ public class MainUI {
                     System.out.print("\nВозврат в предыдущее меню.\n");
                     break;
                 default:
-                    System.err.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+                    System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
             }
         } while (!inputAction.equals("0"));
     }

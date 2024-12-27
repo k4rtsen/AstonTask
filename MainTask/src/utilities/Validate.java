@@ -1,7 +1,6 @@
 package utilities;
 
-import static utilities.Constants.SPECIAL_FOR_PASSWORD;
-import static utilities.Constants.USER_PASSWORD_LENGTH;
+import static utilities.Constants.*;
 
 /**
  * Класс для валидации данных
@@ -81,9 +80,6 @@ public class Validate {
      * @return true or false
      */
     public static boolean userPasswordValidate(String data) {
-        String REGEX_FOR_PASSWORD_CHECK = String.format(
-                "^(?=.*[A-Z])(?=.*[%s])(?=.*[0-9])(?=.*[a-z]).{%d}$",
-                SPECIAL_FOR_PASSWORD, USER_PASSWORD_LENGTH);
         return data.matches(REGEX_FOR_PASSWORD_CHECK);
     }
 
