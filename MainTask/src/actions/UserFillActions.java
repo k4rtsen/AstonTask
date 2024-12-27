@@ -28,6 +28,7 @@ public class UserFillActions implements FillActions<User> {
     @Override
     public List<User> fillByFile() {
         String fileName = "input_User.txt";
+        //TODO add checkers for fields
         return readFile(fileName, (data, i) -> userBuilder
                 .setId(i)
                 .setName(data[0])

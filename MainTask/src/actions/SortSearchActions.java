@@ -1,6 +1,8 @@
 package actions;
 
+import comparators.BusComparator;
 import enums.SortType;
+import models.Bus;
 
 import java.util.List;
 import java.util.Scanner;
@@ -26,6 +28,7 @@ public interface SortSearchActions<T> {
         }
 
         if (sortType == SortType.ADDITIONAL) {
+            Bus.setComp(new BusComparator.ByNumber());
             // TODO if additional sort
             return;
         }
@@ -67,6 +70,8 @@ public interface SortSearchActions<T> {
     void sortByThirdField(List<T> models);
 
     void sortByFourthField(List<T> models);
+
+    void sort(List<T> models, String msg);
 
     T binarySearch(List<T> models);
 }
