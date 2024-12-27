@@ -1,9 +1,6 @@
 package actions;
 
-import algorithms.AdditionalSort;
-import comparators.BusComparator;
 import enums.SortType;
-import models.Bus;
 
 import java.util.List;
 import java.util.Scanner;
@@ -29,7 +26,6 @@ public interface SortSearchActions<T> {
         }
 
         if (sortType == SortType.ADDITIONAL) {
-            Bus.setComp(new BusComparator.ByNumber());
             additionalSort(models);
             return;
         }
