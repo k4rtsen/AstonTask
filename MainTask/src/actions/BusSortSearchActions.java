@@ -55,6 +55,7 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
 
     @Override
     public void sortByThirdField(List<Bus> models) {
+        Bus.setComp(new BusComparator.ByMileage());
         sort(models, "\nМассив отсортирован по пробегу (by mileage).");
     }
 

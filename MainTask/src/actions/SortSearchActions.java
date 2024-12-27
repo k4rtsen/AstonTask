@@ -49,8 +49,9 @@ public interface SortSearchActions<T> {
                     return;
                 case "3":
                     sortByThirdField(models);
+                    return;
                 case "4":
-
+                    sortByFourthField(models);
                     return;
                 case "0":
                     System.out.print("\nВозврат в предыдущее меню.\n");
