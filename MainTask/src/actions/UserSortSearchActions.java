@@ -65,9 +65,10 @@ public class UserSortSearchActions implements SortSearchActions<User> {
     }
 
     @Override
-    public void sortByFourthField(List<User> models) {
+    public boolean sortByFourthField(List<User> models) {
         User.setComp(new UserComparator.ByEmail());
         sort(models, "\nМассив отсортирован по электронной почте (by email).", false);
+        return true;
     }
 
     @Override
@@ -100,19 +101,19 @@ public class UserSortSearchActions implements SortSearchActions<User> {
                         .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
             }
             case UserComparator.ByName _ -> {
-                String userName = readString("Введите имя пользователя", Validate::userNameValidate);
+                String userName = readString("Введите имя пользователя", _ -> true);
                 if (userName.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(userName)
                         .setPassword(DEFAULT_USER_PASSWORD).setEmail(DEFAULT_USER_EMAIL).build();
             }
             case UserComparator.ByPassword _ -> {
-                String password = readString("Введите пароль пользователя", Validate::userPasswordValidate);
+                String password = readString("Введите пароль пользователя", _ -> true);
                 if (password.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
                         .setPassword(password).setEmail(DEFAULT_USER_EMAIL).build();
             }
             case UserComparator.ByEmail _ -> {
-                String email = readString("Введите e-mail пользователя", Validate::userEMailValidate);
+                String email = readString("Введите e-mail пользователя", _ -> true);
                 if (email.equals("0")) return null;
                 lookingUser = userBuilder.setId(DEFAULT_USER_ID).setName(DEFAULT_USER_NAME)
                     .setPassword(DEFAULT_USER_PASSWORD).setEmail(email).build();
@@ -122,13 +123,13 @@ public class UserSortSearchActions implements SortSearchActions<User> {
                         Validate::isPositiveInteger);
                 if (id == 0) return null;
                 String userName = readString("Введите имя пользователя (0 - возврат в предыдущее меню): ",
-                        Validate::userNameValidate);
+                        _ -> true);
                 if (userName.equals("0")) return null;
                 String password = readString("Введите пароль пользователя (0 - возврат в предыдущее меню): ",
-                        Validate::userPasswordValidate);
+                        _ -> true);
                 if (password.equals("0")) return null;
                 String email = readString("Введите e-mail пользователя (0 - возврат в предыдущее меню): ",
-                        Validate::userEMailValidate);
+                        _ -> true);
                 if (email.equals("0")) return null;
                 lookingUser = userBuilder.setId(id).setName(userName).setPassword(password).setEmail(email).build();
             }

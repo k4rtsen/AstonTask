@@ -68,8 +68,9 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
     }
 
     @Override
-    public void sortByFourthField(List<Bus> models) {
+    public boolean sortByFourthField(List<Bus> models) {
         System.out.print("\nКоманда не распознана, повторите ввод (0 - возврат в предыдущее меню).\n");
+        return false;
     }
 
     @Override
@@ -95,26 +96,26 @@ public class BusSortSearchActions implements SortSearchActions<Bus> {
 
         switch (comp) {
             case BusComparator.ByNumber _ -> {
-                int number = readInt("Введите номер автобуса (0 - отмена): ", Validate::busNumberValidate);
+                int number = readInt("Введите номер автобуса (0 - отмена): ", Validate::isPositiveInteger);
                 if (number == 0) return null;
                 lookingBus = busBuilder.setNumber(number).setModel(DEFAULT_BUS_MODEL).setMileage(DEFAULT_BUS_MILEAGE).build();
             }
             case BusComparator.ByModel _ -> {
-                String model = readString("Введите модель автобуса (0 - отмена): ", Validate::busModelValidate);
+                String model = readString("Введите модель автобуса (0 - отмена): ", _ -> true);
                 if (model.equals("0")) return null;
                 lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(model).setMileage(DEFAULT_BUS_MILEAGE).build();
             }
             case BusComparator.ByMileage _ -> {
-                int mileage = readInt("Введите пробег автобуса (0 - отмена): ", Validate::busMileageValidate);
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ", Validate::isPositiveInteger);
                 if (mileage == 0) return null;
                 lookingBus = busBuilder.setNumber(DEFAULT_BUS_NUMBER).setModel(DEFAULT_BUS_MODEL).setMileage(mileage).build();
             }
             case null, default -> {
-                int number = readInt("Введите номер автобуса (0 - отмена): ", Validate::busNumberValidate);
+                int number = readInt("Введите номер автобуса (0 - отмена): ", Validate::isPositiveInteger);
                 if (number == 0) return null;
-                String model = readString("Введите модель автобуса (0 - отмена): ", Validate::busModelValidate);
+                String model = readString("Введите модель автобуса (0 - отмена): ", _ -> true);
                 if (model.equals("0")) return null;
-                int mileage = readInt("Введите пробег автобуса (0 - отмена): ", Validate::busMileageValidate);
+                int mileage = readInt("Введите пробег автобуса (0 - отмена): ", Validate::isPositiveInteger);
                 if (mileage == 0) return null;
                 lookingBus = busBuilder.setNumber(number).setModel(model).setMileage(mileage).build();
             }
